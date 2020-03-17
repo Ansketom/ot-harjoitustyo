@@ -1,5 +1,4 @@
-# otsikko
+# Ot-harjoitustyö
 
-##alaotsikko
-
-*mitä vaisto sanoo, sen kirjoitan*
+*Ohjelmistotekniikan* **harjoitustyön** sijoituspaikka
+[ot-harjoitustyo] (https://github.com/ansketom/ot-harjoitustyo/tree/master/laskarit/viikko1)
