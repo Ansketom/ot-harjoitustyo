@@ -8,7 +8,7 @@ Sovellus on lähtökohtaisesti henkilökohtainen, eli siinä ei ole eritelty kä
 
 Sovellus aukeaa ensimmäisenä näkymään, jossa käyttäjä voi laskea päivän aikana syödyt ateriat yhteen.  
 
-### Perusvesrion tarjoama toiminnallisuus
+### Perusversion tarjoama toiminnallisuus
 -Käyttäjä voi lisätä sovellukseen ruoka-aineen (nimi ja makroravinteet/100g). (Tietokantataulu 1)(Näkymä1)  
 -Käyttäjä voi poistaa sovelluksesta ruoka-aineen, tai muokata sen tietoja.(Näkymä1)  
 -Käyttäjä voi muodostaa ruoka-aineista aterian. (Tietokantataulu 2)(Näkymä2)  
@@ -21,7 +21,8 @@ Sovellus aukeaa ensimmäisenä näkymään, jossa käyttäjä voi laskea päivä
 
 Mikäli sovellus saadaan tähän asti toimimaan hyvin niin että koodaajalla on ylimääräistä aikaa, voidaan sovellusta täydentää vielä seuraavilla ominaisuuksilla:  
 
-1) Mahdollisuus tallentaa yhteenlaskettujen aterioiden tulos päivämäärällä tietokantaan (yksi rivi per päivä). Tämä tekisi sovelluksesta vähän niin kuin ruokapäiväkirjan (teknisesti energia- ja makroravinnepäiväkirja). Tähän kirjanpitoon tulee voida tallentaa myös päivän aikana juodun veden kokonaismäärä. Toiminnallisuus siis:  
+1) Mahdollisuus tallentaa yhteenlaskettujen aterioiden tulos päivämäärällä tietokantaan (yksi rivi per päivä). Tämä tekisi sovelluksesta vähän niin kuin ruokapäiväkirjan (teknisesti energia- ja makroravinnepäiväkirja). Tähän kirjanpitoon tulee voida tallentaa myös päivän aikana juodun veden kokonaismäärä.  
+Toiminnallisuus siis:  
 -Lisätään yksi kerrallaan aterioita päivämäärän riville tietokantaan. Tämä mahdollistaa kirjanpidon pitkin päivää.  
 -Päivämäärältä voi myös vähentää aterioita, jonka idea on mahdollistaa väärän merkinnän korjaus. Tietokannassa ei näy, että mitä aterioita millekin päivälle on lisätty, vaan vain niistä laskettu kokonaisenergiamäärä ja ravitoarvoja. Ohjelman tulee näyttää jollain hyvin havaittavalla tavalla, jos viimeisin tehty muutos aiheuttaa miinusmerkkisen arvon tietokannassa.  
 
