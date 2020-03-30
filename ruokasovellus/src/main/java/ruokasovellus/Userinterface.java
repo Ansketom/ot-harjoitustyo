@@ -1,5 +1,5 @@
 
-package com.mycompany.ruokasovellus;
+package ruokasovellus;
 
 import java.util.Scanner;
 import javafx.application.Application;
@@ -24,8 +24,13 @@ public class Userinterface {
         
         System.out.println("Tervetuloa ruokasovellukseen!");
         System.out.println("Uusi käyttäjä? Aloita luomalla tietokantataulut komennolla: 9");
+        System.out.println("Tyhjennä taulut komennolla: drop");
+        System.out.println("Listaa taulut komennolla: tables");
+        System.out.println("");
+        
         System.out.println("Lisää ruoka-aine komennolla: 1");
         System.out.println("Listaa lisätyt ruoka-aineet komennolla: 2");
+        System.out.println("Poista ruoka-aine komennolla: 3");
         System.out.println("Sulje ohjelma komennolla: x");
         
         String komento;
@@ -42,22 +47,30 @@ public class Userinterface {
                 System.out.println("Paljonko siinä on rasvaa/100g? (Muista yksi desimaali!)");
                 String fats= lukija.nextLine();
                 
+                incredient=incredient.toLowerCase();
                 //tietokanta int, niin tallennetaan data desigrammoina
                 int ch=Integer.valueOf(carbohyd.replaceAll("\\D+", ""));
                 int prot=Integer.valueOf(protein.replaceAll("\\D+", ""));
                 int fat=Integer.valueOf(fats.replaceAll("\\D+", ""));
                 
-                kanta.addIncredient(incredient, ch, prot, fat);
+                boolean y = kanta.addIncredient(incredient, ch, prot, fat);
                 
             }else if (komento.equals("2")){
-                kanta.listIncredients();
+                System.out.println(kanta.listIncredientsToString());
+            }else if (komento.equals("3")){
+                System.out.println("Minkä niminen ruoka-aine poistetaan?");
+                String name=lukija.nextLine();
+                name=name.toLowerCase();
+                kanta.deleteIncredient(name);
             }else if (komento.equals("x")){
                 kanta.closeConnection();
                 break;
             }else if (komento.equals("9")){
                 kanta.createTables();
-            }else if(komento.equals("test")){
-                kanta.test()
+            }else if(komento.equals("drop")){
+                kanta.dropTables();
+            }else if(komento.equals("tables")){
+                System.out.println(kanta.getTableNames());
             }
             
             

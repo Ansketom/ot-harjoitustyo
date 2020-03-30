@@ -1,5 +1,5 @@
 
-package com.mycompany.ruokasovellus;
+package ruokasovellus;
 
 import java.sql.*;
 import java.sql.Connection;
@@ -23,8 +23,19 @@ public class Database {
             System.out.println("VIRHE: Taulujen luominen ei onnistunut.");
         }
     }
-    public void addIncredient(String name, int ch, int prot, int fat){
-        System.out.println("Lisätään ruoka-ainetta "+name+ " ("+ch+", "+prot+", "+fat+")");
+    public void dropTables(){
+        System.out.println("Poistetaan tauluja.");
+        try{
+            Statement s=db.createStatement();
+            s.execute("PRAGMA foreign_keys=OFF");
+            s.execute("DROP TABLE Incredients");
+            s.execute("PRAGMA foiregn_keys=ON");
+        }catch(SQLException e){
+            System.out.println("VIRHE: Taulujen poistamienn ei onnistunut.");
+        }
+    }
+    public boolean addIncredient(String name, int ch, int prot, int fat){
+        System.out.println("Lisätään ruoka-ainetta "+name+ " ("+ch+", "+prot+", "+fat+").");
         try{
             PreparedStatement p = db.prepareStatement("INSERT INTO Incredients (name, ch, prot, fat) VALUES(?,?,?,?)");
             p.setString(1, name);
@@ -32,37 +43,50 @@ public class Database {
             p.setInt(3, prot);
             p.setInt(4, fat);
             p.executeUpdate();
+            return true;
         }catch(SQLException e){
             System.out.println("Ruoka-aineen lisääminen epäonnistui.");
+            return false;
         }
     }
-    public void listIncredients(){
+    public void deleteIncredient(String name){
+        System.out.println("Poistetaan ruoka-ainetta "+name+".");
+        try{
+        PreparedStatement p = db.prepareStatement("DELETE FROM Incredients WHERE name=?");
+            p.setString(1, name);
+            p.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Ruoka-aineen poistaminen epäonnistui.");
+        }
+    }
+    public String listIncredientsToString(){
+        String list= "Ruoka-aineslista \n(Nimike: hiilihydraattia, proteiinia, rasvaa (g/100g))";
         try{
             PreparedStatement p =db.prepareStatement ("SELECT name, ch, prot, fat FROM Incredients i GROUP BY name");
             ResultSet r= p.executeQuery();
-            System.out.println("Ruoka-aineslista (Nimike: hiilihydraattia, proteiinia, rasvaa (g/100g))");
+            
             while (r.next()){
-                double hh= r.getInt("ch")/10;
-                double protein= r.getInt("prot")/10;
-                double rasva= r.getInt("fat")/10;
-                System.out.println(r.getString("name")+": h:"+hh+", p:"+protein+", r:"+rasva);
+                double hh= r.getInt("ch");
+                double protein= r.getInt("prot");
+                double rasva= r.getInt("fat");
+                list=list+"\n"+r.getString("name")+": h:"+hh/10+", p:"+protein/10+", r:"+rasva/10;
+                
             }
-                    
+            return list;    
         }catch(SQLException e){
-            System.out.println("VIRHE: Ruoka-aineiden listaaminen epäonnistui");
+            return "VIRHE: Ruoka-aineiden listaaminen epäonnistui.";
         }
+        
     }
-    
 
-/*
     public void closeConnection(){
         try{
             db.close();
         }catch(SQLException e){
-            System.out.println("Tietokantayhteyden sulkeminen ei onnistunut");
+            System.out.println("Tietokantayhteyden sulkeminen ei onnistunut.");
         }
     }
-*/
+
     public String getTableNames(){
         String tableNames= "Tables:";
         
@@ -72,10 +96,11 @@ public class Database {
         while(r.next()){
             tableNames= tableNames +" "+(r.getString(3));
         }
-        }catch(SQLException e){
-            System.out.println("VIRHE: ei onnistuttu etsimään tauluja");
-        }
         return tableNames;
+        }catch(SQLException e){
+            return "VIRHE: ei onnistuttu etsimään tauluja.";
+        }
+        
         
     }
 }
