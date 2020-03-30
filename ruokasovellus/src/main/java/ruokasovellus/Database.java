@@ -31,7 +31,7 @@ public class Database {
             s.execute("DROP TABLE Incredients");
             s.execute("PRAGMA foiregn_keys=ON");
         }catch(SQLException e){
-            System.out.println("VIRHE: Taulujen poistamienn ei onnistunut.");
+            System.out.println("VIRHE: Taulujen poistaminen ei onnistunut.");
         }
     }
     public boolean addIncredient(String name, int ch, int prot, int fat){
