@@ -8,3 +8,4 @@ Päivä | aika(h) | Mitä tein
 28.3|2|Tekstikäyttöliittymä alkuun. Ohjelmarakenteen pohtimista.
 29.3|3|Database-luokka alkuun, ja siihen metodit addIncredient ja listIncredients.
 29.3|1|Database-luokan ensimmäinen testi (luoko createTables halutut taulut).
+30.3|5|Taulujen ja ruoka-aineiden luonti/lisäys ja poisto kuntoon, ja testejä niille.
