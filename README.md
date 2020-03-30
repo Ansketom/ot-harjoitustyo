@@ -12,11 +12,11 @@ Ruokasovellus on sovellus, jonka avulla käyttäjä voi laskea, että kuinka pal
 
 
 ### Komentorivikomennot
-###### Testaus
+#### Testaus
 Testit saa suoritettua komennolla  
-    mvn test    
+```    mvn test    ```
 Testikattavuusraportin saa luotua komennolla  
-    mvn test jacoco:report
+```    mvn test jacoco:report    ```
 Selaimella avattava kattavuusraportti: \target\site\jacoco\index.html
 
 
