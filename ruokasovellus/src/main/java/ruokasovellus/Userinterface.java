@@ -2,7 +2,7 @@
 package ruokasovellus;
 
 import java.util.Scanner;
-import javafx.application.Application;
+//import javafx.application.Application;
 import java.sql.SQLException;
 
 

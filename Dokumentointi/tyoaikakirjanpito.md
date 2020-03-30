@@ -9,3 +9,4 @@ Päivä | aika(h) | Mitä tein
 29.3|3|Database-luokka alkuun, ja siihen metodit addIncredient ja listIncredients.
 29.3|1|Database-luokan ensimmäinen testi (luoko createTables halutut taulut).
 30.3|5|Taulujen ja ruoka-aineiden luonti/lisäys ja poisto kuntoon, ja testejä niille.
+30.3|1|Tulokseton ongelmanratkaisu: Sovellus käynnistyy, mutta tietokantaa ei voi käyttää yliopiston koneella (mikään ei toimi).
