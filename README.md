@@ -4,7 +4,9 @@ Ruokasovellus on sovellus, jonka avulla käyttäjä voi laskea, että kuinka pal
 aiemmin tallennetuista ruoka-aineista koostettuja aterioita yhteen laskemalla.  
   
 Ruokasovelluksessa on tässä kehitysvaiheessa vasta tekstikäyttöliittymä.
-[Ohjelman juurikansio](https://github.com/ansketom/ot-harjoitustyo/tree/master/ruokasovellus)  
+Tietokanta ei suostunut toimimaan kun kokeilin sovellustani Puttyn kautta laitoksen koneella.
+Tämä siis toimii, tai ei toimi nyt. Hankin itselleni mahdollisuuden kokeilla tätä itse linuxilla ensiviikoksi..    
+  
 ### Dokumentaatio
 
 [Vaatimusmäärittely](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/vaatimusmaarittely.md)  
@@ -18,7 +20,8 @@ Ruokasovelluksessa on tässä kehitysvaiheessa vasta tekstikäyttöliittymä.
 ### Komentorivikomennot
 
 #### Ohjelman käyttö
-Komentoriviltä juurikansiosta (..ot-harjoitustyo\ruokasovellus) komennolla  
+Komentoriviltä [juurikansiosta](https://github.com/ansketom/ot-harjoitustyo/tree/master/ruokasovellus)
+(..ot-harjoitustyo\ruokasovellus) komennolla  
 ```    mvn compile exec:java -Dexec.mainClass=ruokasovellus.Main    ```  
 
 #### Testaus
