@@ -4,8 +4,9 @@ Ruokasovellus on sovellus, jonka avulla käyttäjä voi laskea, että kuinka pal
 aiemmin tallennetuista ruoka-aineista koostettuja aterioita yhteen laskemalla.  
   
 Ruokasovelluksessa on tässä kehitysvaiheessa vasta tekstikäyttöliittymä.
-Tietokanta ei suostunut toimimaan kun kokeilin sovellustani Puttyn kautta laitoksen koneella.
-Tämä siis toimii, tai ei toimi nyt. Hankin itselleni mahdollisuuden kokeilla tätä itse linuxilla ensiviikoksi..    
+Tietokanta ei suostunut toimimaan kun kokeilin sovellustani Puttyn kautta laitoksen koneella
+(vaikka omalla win-koneellani kaikki toimii). Ohjelma siis toimii, tai ei toimi.
+Hankin ensiviikoksi itselleni mahdollisuuden kokeilla tätä itse myös linuxilla..    
   
 ### Dokumentaatio
 
