@@ -11,9 +11,10 @@ Sovellus aukeaa ensimmäisenä näkymään, jossa käyttäjä voi laskea päivä
 ### Perusversion tarjoama toiminnallisuus
 -Käyttäjä voi lisätä sovellukseen ruoka-aineen (nimi ja makroravinteet/100g). (Tietokantataulu 1)(Näkymä1)  
 -Käyttäjä voi poistaa sovelluksesta ruoka-aineen, tai muokata sen tietoja.(Näkymä1)  
--Käyttäjä voi muodostaa ruoka-aineista aterian. (Tietokantataulu 2)(Näkymä2)  
+-Käyttäjä voi muodostaa ruoka-aineista aterian. (Tietokantataulu 2 ja 3)(Näkymä2)  
 -Käyttäjä voi poistaa sovelluksesta aterian, tai muokata sen sisältöä. (Näkymä2)  
--Käyttäjä voi laskea aterioita yhteen ja saada siten selville päivän ruokien energiamäärän ja makroravinnemäärät (gramoina: hiilihydraattia, proteiinia, rasvaa)(Näkymä3).  
+-Käyttäjä voi laskea aterioita yhteen ja saada siten selville päivän ruokien energiamäärän ja makroravinnemäärät
+ (gramoina: hiilihydraattia, proteiinia, rasvaa)(Tietokantataulu 4)(Näkymä3).  
 -Käyttäjä voi vaihtaa näkymää välilehtien selaamisen tapaan ohjelmassa olevien kolmen(3) näkymän välillä.  
 
 

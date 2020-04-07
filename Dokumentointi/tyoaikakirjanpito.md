@@ -10,3 +10,13 @@ Päivä | aika(h) | Mitä tein
 29.3|1|Database-luokan ensimmäinen testi (luoko createTables halutut taulut).
 30.3|5|Taulujen ja ruoka-aineiden luonti/lisäys ja poisto kuntoon, ja testejä niille.
 30.3|1|Tulokseton ongelmanratkaisu: Sovellus käynnistyy, mutta tietokantaa ei voi käyttää yliopiston koneella (mikään ei toimi).
+3.4|0.5|checkstylen "asennus"
+4.4|1|Perustoiminnallisuuden vaatimien tietokantojen suunnittelu ja SQL-skeeman teko
+4.4|3|Annoksiin liittyvän toiminnallisuuden lisääminen. Aiemmassa koodissa ilmenneiden ongelmien korjaus.
+5.4|6|Törmäsin testausongelmiin, kun sql-tietokannan droppaus joka testin välissä ei toimikaan.
+6.4|2|Testien redesignausta koska ongelmia. Lopputulos: lisää ongelmia + kaikki testit on nyt rikki.
+7.4|2|Yritys saada jotain ohjeiden mukausta palautettua.
+----|--|----
+7.4|30| YHT TUNTIMÄÄRÄ
+
+
