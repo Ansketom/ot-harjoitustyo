@@ -97,8 +97,8 @@ public class DesktopUI extends Application {
             String incredName = incredientInput.getText();
             String energy = kcalInput.getText();
             String carbohyd = chInput.getText();
-            String protein = incrprot.getText();
-            String fats = incrfat.getText();
+            String protein = protInput.getText();
+            String fats = fatInput.getText();
             
             int ene = Integer.valueOf(energy.replaceAll("\\D+", ""));
             int ch = Integer.valueOf(carbohyd.replaceAll("\\D+", ""));
