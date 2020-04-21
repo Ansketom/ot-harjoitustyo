@@ -168,7 +168,7 @@ public class Database {
             ResultSet r = p.executeQuery();
             String portions = "";
             while (r.next()) {
-                portions = portions + (r.getString("name")) + " ";
+                portions =(r.getString("name")) + "\n";
             }
             return portions;
         } catch (SQLException e) {

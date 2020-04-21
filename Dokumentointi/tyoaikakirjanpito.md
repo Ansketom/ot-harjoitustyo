@@ -15,8 +15,12 @@ Päivä | aika(h) | Mitä tein
 4.4|3|Annoksiin liittyvän toiminnallisuuden lisääminen. Aiemmassa koodissa ilmenneiden ongelmien korjaus.
 5.4|6|Törmäsin testausongelmiin, kun sql-tietokannan droppaus joka testin välissä ei toimikaan.
 6.4|2|Testien redesignausta koska ongelmia. Lopputulos: lisää ongelmia + kaikki testit on nyt rikki.
-7.4|2|Yritys saada jotain ohjeiden mukausta palautettua.
+7.4|2|Yritys saada jotain ohjeiden mukausta palautettua GitHubiin.
+10.4|1|Desktop-näkymän aloitus. Tavoite oli saada joku ikkuna aukeamaan, ja onnistui.
+11.4|3|Tavoite saada joidenkin toimintojen tarvitsemat elementit ilman toiminnallisuutta ikkunaan auki. Tämä onnistui.
+20.4|2|Desktop-näkymän suunnittelua. Päiväkirjanäkymän toimintaluokan luominen ja testien aloitus sille.
+21.4|8|Toiminnallisuuden tuominen desktop-käyttöliittymään. Meni 7h ennen kuin sain mitään toimimaan.
 ----|--|----
-7.4|30| YHT TUNTIMÄÄRÄ
+21.4|44| YHT TUNTIMÄÄRÄ
 
 

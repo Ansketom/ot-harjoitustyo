@@ -1,26 +1,25 @@
 
-package ruokasovellus;
+package ruokasovellus.ui;
 
 import java.util.Scanner;
-//import javafx.application.Application;
+
 import java.sql.SQLException;
+import ruokasovellus.Database;
 
 
-public class Userinterface {
+public class TextUI{
     
     public Database kanta;
     
-    public Userinterface() throws SQLException {
+    public TextUI() throws SQLException {
         this.kanta = new Database();
     }
-    
     public void start(Scanner lukija) {
-        
-        textUI(lukija);
+        textUserInterface(lukija);
 
     }
     
-    public void textUI(Scanner lukija) {
+    public void textUserInterface(Scanner lukija) {
         
         System.out.println("Tervetuloa ruokasovellukseen!");
         System.out.println("Uusi käyttäjä? Aloita luomalla tietokantataulut komennolla: 9");
@@ -117,5 +116,14 @@ public class Userinterface {
         
     
     }
+    
+
+    
+    
+    
+    
+    
+    
+    
        
 }
