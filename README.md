@@ -12,7 +12,10 @@ lähinnä vain edes jonkun toiminnallisuuden saamiseen tuohon desktop-käyttöli
 ### Dokumentaatio
 
 [Vaatimusmäärittely](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/vaatimusmaarittely.md)  
-[Työaikakirjanpito](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/tyoaikakirjanpito.md)  
+[Työaikakirjanpito](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/tyoaikakirjanpito.md)
+[viikon 5 release](https://github.com/ansketom/ot-harjoitustyo/releases/tag/viikko5)
+[SQL-skeema](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/SQL-skeema.txt)    
+muita arkkitehtuuridokumentteja ei vielä ole.  
 
 
 
