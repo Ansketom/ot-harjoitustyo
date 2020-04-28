@@ -1,4 +1,4 @@
-package ruokasovellus;
+package ruokasovellus.ui;
 
 
 import ruokasovellus.ui.DesktopUI;

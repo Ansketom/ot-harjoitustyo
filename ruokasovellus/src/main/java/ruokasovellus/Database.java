@@ -3,11 +3,13 @@ package ruokasovellus;
 
 import java.sql.*;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 
 public class Database {
-    
+   
     public Connection db;
+    
     
     public Database() throws SQLException {
         this.db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
@@ -19,7 +21,7 @@ public class Database {
             s.execute("CREATE TABLE Incredients(id INTEGER PRIMARY KEY, name TEXT UNIQUE, kcal INTEGER, ch INTEGER, prot INTEGER, fat INTEGER)");
             s.execute("CREATE TABLE Portions(id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
             s.execute("CREATE TABLE DishContents(portion_id INTEGER, incredient_id INTEGER, amount INTEGER)");
-            s.execute("CREATE TABLE Diary(date TEXT, ch INTEGER, prot INTEGER, fat INTEGER)");
+            s.execute("CREATE TABLE Diary(date TEXT UNIQUE, kcal INTEGER, ch INTEGER, prot INTEGER, fat INTEGER)");
 
             s.execute("PRAGMA foreign_keys= ON");
             
@@ -29,41 +31,8 @@ public class Database {
             return false;
         }
     }
-    public boolean dropDatabase() {
-        try {
-            Statement s = db.createStatement();
-            s.execute("DROP DATABASE ruokasovellus.db");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Tietokannan poisto ei onnistunut.");
-            return false;
-        }
-    }
-    public boolean dropTables() {
+    
 
-        try {
-            Statement s = db.createStatement();
-            s.execute("PRAGMA foreign_keys=OFF");
-            s.execute("DROP TABLE Diary");
-            s.execute("DROP TABLE DishContents");
-            s.execute("DROP TABLE Incredients");
-            s.execute("DROP TABLE Portions");
-            s.execute("PRAGMA foiregn_keys=ON");
-            
-
-            return true;
-        } catch (SQLException e) {
-            System.out.println("VIRHE: Taulujen poistaminen ei onnistunut.");
-            return false;
-        }
-    }
-    public void closeConnection() {
-        try {
-            db.close();
-        } catch (SQLException e) {
-            System.out.println("Tietokantayhteyden sulkeminen ei onnistunut.");
-        }
-    }
     public boolean addIncredient(String name, int kcal, int ch, int prot, int fat) {
         System.out.println("Lisätään ruoka-ainetta " + name + " (" + kcal + ", " + ch + ", " + prot + ", " + fat + ").");
         try {
@@ -108,6 +77,7 @@ public class Database {
             return "VIRHE: Ruoka-aineiden listaaminen epäonnistui.";
         }
     }
+
     public boolean addPortion(String name) {
         try {
             PreparedStatement p = db.prepareStatement("INSERT INTO Portions (name) VALUES(?)");
@@ -132,103 +102,53 @@ public class Database {
             return false;
         }
     }
-    public void deletePortion(String name) {
-        System.out.println("Poistetaan ruoka-annosta " + name + ".");
+    public boolean deletePortionPart(String portion, String incredient) {
+        System.out.println("Poistetaan ruoka-annoksesta" + portion + " ruoka-ainetta " + incredient);
+        int portionId = this.getPortionId(portion);
+        int incredientId = this.getIncredientId(incredient);
+        System.out.println("annosid " + portionId + " aineid :" + incredientId);
         try {
-            PreparedStatement d = db.prepareStatement("DELETE FROM DishContents d Where portion_id=(SELECT id FROM Portions WHERE name=?)");
-            d.setString(1, name);
-                    
-            PreparedStatement p = db.prepareStatement("DELETE FROM Portions WHERE name=?");
-            p.setString(1, name);
-            p.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ruoka-aineen poistaminen epäonnistui.");
-        }
-    }
-    public boolean addToDiary(String date, int kcal, int ch, int prot, int fat) {
-        try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Diary (date, kcal, ch, prot, fat) VALUES(?,?,?,?,?)");
-            p.setString(1, date);
-            p.setInt(2, kcal);
-            p.setInt(3, ch);
-            p.setInt(4, prot);
-            p.setInt(5, fat);
+            PreparedStatement p = db.prepareStatement("DELETE FROM DishContents WHERE portion_id=? AND incredient_id=?");
+            p.setInt(1, portionId);
+            p.setInt(2, incredientId);
             p.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("Päiväkirjamerkinnän lisääminen epäonnistui.");
+            System.out.println("Ruoka-aineen poistaminen epäonnistui.");
+            return false;
+        }
+    }
+    
+    public void addDateToDiary(String date) {
+        try {
+            PreparedStatement p = db.prepareStatement("INSERT INTO Diary (date, kcal, ch, prot, fat) VALUES(?,?,?,?,?)");
+            p.setString(1, date);
+            p.setInt(2, 0);
+            p.setInt(3, 0);
+            p.setInt(4, 0);
+            p.setInt(5, 0);
+            p.executeUpdate();
+            System.out.println("Päivän lisäys onnistui");
+        } catch (SQLException e) {
+            System.out.println("Päivämäärän lisääminen epäonnistui.");
+        }
+    }
+    public boolean updateDiary(String date, int kcal, int ch, int prot, int fat) {
+        try {
+            PreparedStatement p = db.prepareStatement("UPDATE Diary SET kcal = ?, ch = ?, prot = ?, fat = ? WHERE date  = ?");
+            p.setInt(1, kcal);
+            p.setInt(2, ch);
+            p.setInt(3, prot);
+            p.setInt(4, fat);
+            p.setString(5, date);
+            p.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Päiväkirjamerkinnän päivitys epäonnistui.");
             return false;
         } 
     }
-
-
-    public String getPortionNames() {
-        try {
-            PreparedStatement p = db.prepareStatement("SELECT * FROM Portions GROUP BY name");
-            ResultSet r = p.executeQuery();
-            String portions = "";
-            while (r.next()) {
-                portions =(r.getString("name")) + "\n";
-            }
-            return portions;
-        } catch (SQLException e) {
-            return "VIRHE: ei onnistuttu etsimään tauluja.";
-        }
-    }
-    public String getPortionContents(String name) {
-        String portionContent = name + ":";
-        try {
-            PreparedStatement p = db.prepareStatement("SELECT I.name AS incr, C.amount AS gr from Incredients I, Portions P LEFT JOIN DishContents C ON I.id=C.incredient_id WHERE P.id=C.portion_id AND P.name=? GROUP BY I.name");
-            p.setString(1, name);
-            ResultSet r = p.executeQuery();
-            while (r.next()) {
-                portionContent = portionContent + " " + r.getString("incr") + "(" + r.getInt("gr") + "g)";
-            }
-            return portionContent;
-        } catch (SQLException e) {
-            return "VIRHE: ei onnistuttu etsimään annoksen sisältöä.";
-        }
-    }
-    public String getDishContentData() {
-        String data = "(annos-id, ruoka-aine -id, määrä(g):\n";
-        
-        try {
-            PreparedStatement p = db.prepareStatement("SELECT * FROM DishContents");
-            ResultSet r = p.executeQuery();
-            
-            while (r.next()) {
-                data = data + " (" + (r.getInt("portion_id")) + " " + (r.getInt("incredient_id")) + " " + (r.getInt("amount")) + ")\n";
-            }
-            return data;
-        } catch (SQLException e) {
-            return "VIRHE: ei onnistuttu hakemaan annostensisältödataa.";
-        }
-    }
-    public String getTableNames() {
-        String tableNames = "Tables:";
-        
-        try {
-            DatabaseMetaData md = db.getMetaData();
-            ResultSet r = md.getTables(null, null, "%", null);
-            while (r.next()) {
-                tableNames = tableNames + " " + (r.getString(3));
-            }
-            return tableNames;
-        } catch (SQLException e) {
-            return "VIRHE: ei onnistuttu etsimään tauluja.";
-        } 
-    }
-    public int getIncredientId(String name) {
-        try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Incredients WHERE name=?");
-            p.setString(1, name);
-            ResultSet r = p.executeQuery();
-            return r.getInt("id");
-
-        } catch (SQLException e) {
-            return -1;
-        }
-    }
+    
     public int getPortionId(String name) {
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Portions WHERE name=?");
@@ -244,5 +164,119 @@ public class Database {
             return -1;
         }
     }
+    public String getPortionNames() {
+        try {
+            String portions = "";
+            PreparedStatement p = db.prepareStatement("SELECT * FROM Portions ORDER BY name");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                portions = portions + r.getString("name") + "\n";
+            }
+            return portions;
+        } catch (SQLException e) {
+            return "VIRHE: ei onnistuttu etsimään tauluja.";
+        }
+    }
+    
+    public String getPortionContentsWithName(String name) {
+        String portionContent = name + ":";
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT I.name AS incr, C.amount AS gr from Incredients I, Portions P LEFT JOIN DishContents C ON I.id=C.incredient_id WHERE P.id=C.portion_id AND P.name=? GROUP BY I.name");
+            p.setString(1, name);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                portionContent = portionContent + " " + r.getString("incr") + "(" + r.getInt("gr") + "g)";
+            }
+            return portionContent;
+        } catch (SQLException e) {
+            return "VIRHE: ei onnistuttu etsimään annoksen sisältöä.";
+        }
+    }
+    public ArrayList<String> getPortionContentsInList(String name) {
+        ArrayList<String> portionParts = new ArrayList<>();
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT I.name AS incr, C.amount AS gr from Incredients I, Portions P LEFT JOIN DishContents C ON I.id=C.incredient_id WHERE P.id=C.portion_id AND P.name=? GROUP BY I.name");
+            p.setString(1, name);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                String parts = r.getString("incr") + ":" + r.getInt("gr") + "g";
+                portionParts.add(parts);
+            }
+        } catch (SQLException e) {
+            System.out.println("Ei onnistuttu luomaan palautettavaa taulua annoksen osista");
+        }
+        return portionParts;
+    }
+    public String getDishContentToString() {
+        String data = "annos, ruoka-aine , määrä(g):\n";
+        
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT P.name AS pname, I.name AS iname, D.amount AS damount FROM DishContents D, Incredients I, Portions P WHERE I.id=D.incredient_id AND P.id=D.portion_id;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                data = data + "" + (r.getString("pname")) + " " + (r.getString("iname")) + " " + (r.getInt("damount")) + "\n";
+            }
+            return data;
+        } catch (SQLException e) {
+            return "VIRHE: ei onnistuttu hakemaan annostensisältödataa.";
+        }
+    }
+    
+    public int getIncredientId(String name) {
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Incredients WHERE name=?");
+            p.setString(1, name);
+            ResultSet r = p.executeQuery();
+            return r.getInt("id");
+
+        } catch (SQLException e) {
+            return -1;
+        }
+    }
+    
+    public int[] getIncredientDataInInt(String name) {
+        int [] data = new int[4];
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT * FROM Incredients WHERE name=?");
+            p.setString(1, name);
+            ResultSet r = p.executeQuery();
+            data[0] = r.getInt("kcal");
+            data[1] = r.getInt("ch");
+            data[2] = r.getInt("prot");
+            data[3] = r.getInt("fat");
             
+        } catch (SQLException e) {
+            System.out.println("Ei voitu palauttaa päiväkirjadataa int-listana");
+        }
+        return data;
+    }         
+    public int[] getDiaryDayData(String date) {
+        int [] data = new int[4];
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT * FROM Diary WHERE date=?");
+            p.setString(1, date);
+            ResultSet r = p.executeQuery();
+            data[0] = r.getInt("kcal");
+            data[1] = r.getInt("ch");
+            data[2] = r.getInt("prot");
+            data[3] = r.getInt("fat");
+            
+        } catch (SQLException e) {
+            System.out.println("Ei voitu palauttaa päiväkirjadataa int-listana");
+        }
+        return data;
+    }         
+    public ArrayList<String> getDiaryData() {
+        ArrayList<String> diaryData = new ArrayList<>();
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT date, kcal, ch, prot, fat FROM Diary ORDER BY date");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                diaryData.add(r.getString("date") + ": Kcal: " + r.getInt("kcal") * 1.0 / 10 + ", hiilihyd.: " + r.getInt("ch") * 1.0 / 10 + "g, proteiini: " + r.getInt("prot") * 1.0 / 10 + "g, rasva: " + r.getInt("fat") * 1.0 / 10 + "g");
+            }
+        } catch (SQLException e) {
+            System.out.println("Ei voitu palauttaa päiväkirjadataa arraylistina");
+        }
+        return diaryData;
+    }         
 }

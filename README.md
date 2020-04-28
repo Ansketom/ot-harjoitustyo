@@ -3,11 +3,9 @@ Ruokasovellus on sovellus, jonka avulla käyttäjä voi laskea, että kuinka pal
  aikana energiaa ja eri makroravinteita. Laskenta tapahtuu sovellukseen 
 aiemmin tallennetuista ruoka-aineista koostettuja aterioita yhteen laskemalla.  
   
-Tällä hetkellä Ruokasovelluksessa on mahdollista lisätä ruokia, ja saada ne listattua desktop-käyttöliittymän ikkunassa.
-Aiempaan nähden testejä on tullut lisää vain diary-luokalle, joka on uusi. SQL-skeema on, mutta muuten aikani meni nyt
-lähinnä vain edes jonkun toiminnallisuuden saamiseen tuohon desktop-käyttöliittymään. Odotan että tämä nyt oikeaa hyvin seuraavan
- viikon aikana ja saan vähän näitä väliin jääneitäkin juttuja tehtyä,
- vaikka ei niistä enää sitten pisteitä toki saa..    
+Ohjelman testauksen kanssa on ollut suuria vaikeuksia, enkä tajua miten se kuuluisi fiksusti hoitaa - varmaan olemalla tekemättä tällaista ohjelmaa..  
+En saa luotua JAR:ia jonka voisi ajaa - siinä on joku asia varmaan väärin/väärässä paikassa, mutta en keksi että mikä, missä ja miten.
+Tuhoton aikamäärä mikä tällä viikolla meni mm testien väsäämiseen ja tyhmien toiminnallisuuden luomisen ongelmien (en meinannut saada mitään toimimaan) korjaamiseen teki tilanteen jälleen sellaiseksi että en enää kerinnyt tehdä dokumentointia kun riskinä oli joka tapauksessa vajaa ohjelma joka kaiken lisäksi ei edes aukea missään tai mitenkään.     
   
 ### Dokumentaatio
 

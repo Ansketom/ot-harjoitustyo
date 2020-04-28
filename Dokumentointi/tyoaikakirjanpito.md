@@ -20,7 +20,15 @@ Päivä | aika(h) | Mitä tein
 11.4|3|Tavoite saada joidenkin toimintojen tarvitsemat elementit ilman toiminnallisuutta ikkunaan auki. Tämä onnistui.
 20.4|2|Desktop-näkymän suunnittelua. Päiväkirjanäkymän toimintaluokan luominen ja testien aloitus sille.
 21.4|8|Toiminnallisuuden tuominen desktop-käyttöliittymään. Meni 7h ennen kuin sain mitään toimimaan.
+25.4|1|Viimeviikon palautuksen puutteiden korjausta.
+25.4|4|Ruoka-annossivun toiminnallisuuden lisääminen.
+26.4|1|Päiväkirjanäkymän toiminnallisuuden suunnittelu ja luominen.
+26.4|4|Kaikkien näkymäsivujen toiminnallisuuden kehitys. Löytyi mm vihdoin looginen toimintatapa päiväkirjatoiminnoille, jota voi lähteä nyt toteuttamaan.
+27.4|3|Päiväkirjasivun toiminnot aterian lisäys päivälle ja toString. Meni taas kauan että selvisi, miksi mikään ei alkanut aluksi toimimaan..
+27.4|2|Koodin siistimistä ja ylimääräiten metodien karsimista.
+27.4|1|Testien ihmettelyä. Testaus menee 100% uusiksi.
+28.4|5|En tajua miten tällaisen ohjelman saa testattua (koko ohjelman rakenne varmaan pielessä). En saa ajettavaa Jar:ia luotua.
 ----|--|----
-21.4|44| YHT TUNTIMÄÄRÄ
+28.4|65| YHT TUNTIMÄÄRÄ
 
 
