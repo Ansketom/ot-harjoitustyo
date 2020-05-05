@@ -208,6 +208,7 @@ public class DesktopUI extends Application {
         VBox diaryButtons = new VBox();
         VBox diaryLabels = new VBox();
         VBox diaryFields = new VBox();
+        HBox waterManager = new HBox();
         HBox diaryDatabaseButtons = new HBox();
         HBox diaryManager = new HBox();
         
@@ -219,6 +220,7 @@ public class DesktopUI extends Application {
         diaryLabels.setPadding(new Insets(5, 10, 5, 10));
         diaryLabels.setAlignment(Pos.TOP_RIGHT);
         diaryFields.setPadding(new Insets(5, 10, 5, 10));
+        waterManager.setPadding(new Insets(5, 10, 5, 10));
         
         Label portionLabel = new Label("Ruoka-annos:");
         Label dayLabel = new Label("Päivämäärä:");
@@ -232,6 +234,11 @@ public class DesktopUI extends Application {
         Button formatMealList = new Button("Alusta lasku (pvm)");
         Button sumAMeal = new Button("Lisää annos(annos)");
         Button substractAMeal = new Button("Vähennä annos (annos)");
+        
+        Button getWaterAmount = new Button("Hae päivän vesimäärä(pvm)");
+        Button exportWater = new Button("Tallenna vesimäärä (pvm)");
+        Label waterUnit = new Label ("desilitraa");
+        TextField waterAmount = new TextField();
         
         Label portionsInData = new Label(kanta.getPortionNames());
         
@@ -250,7 +257,20 @@ public class DesktopUI extends Application {
             diary.addMeal(kanta, dayInput.getText(), diaryInput.getText());
             diaryData.setText(diary.diaryToString());
         });
+        substractAMeal.setOnAction((ActionEvent e)-> {
+            diary.substractMeal(kanta, dayInput.getText(), diaryInput.getText());
+            diaryData.setText(diary.diaryToString());
+        });
         showDiaryData.setOnAction((ActionEvent e)-> {
+            diaryData.setText(diary.diaryToString());
+        });
+        getWaterAmount.setOnAction((ActionEvent e)-> {
+            int waterA = diary.getWater(kanta, dayInput.getText());
+            waterAmount.setText(String.valueOf(waterA));
+        });
+        exportWater.setOnAction((ActionEvent e)-> {
+            int wAmount = Integer.valueOf(waterAmount.getText());
+            diary.updateWater(kanta, dayInput.getText(), wAmount);
             diaryData.setText(diary.diaryToString());
         });
         
@@ -258,9 +278,10 @@ public class DesktopUI extends Application {
         diaryFields.getChildren().addAll(diaryInput, dayInput);
         diaryButtons.getChildren().addAll(getDate, formatMealList, sumAMeal, substractAMeal);
         diaryDatabaseButtons.getChildren().addAll(showDiaryData);
+        waterManager.getChildren().addAll(getWaterAmount, waterAmount, waterUnit, exportWater);
         
         diaryManager.getChildren().addAll(diaryLabels, diaryFields, diaryButtons, portionsInData);
-        diaryPage.getChildren().addAll(diaryManager, diaryDatabaseButtons, diaryData);
+        diaryPage.getChildren().addAll(diaryManager, waterManager, diaryDatabaseButtons, diaryData);
         // Setup primary stage
         first.setOnAction((event)-> {
             layout.setCenter(incredientPage);

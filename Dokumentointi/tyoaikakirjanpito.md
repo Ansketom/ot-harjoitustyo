@@ -28,7 +28,11 @@ Päivä | aika(h) | Mitä tein
 27.4|2|Koodin siistimistä ja ylimääräiten metodien karsimista.
 27.4|1|Testien ihmettelyä. Testaus menee 100% uusiksi.
 28.4|5|En tajua miten tällaisen ohjelman saa testattua (koko ohjelman rakenne varmaan pielessä). En saa ajettavaa Jar:ia luotua.
+3.5|1|Saadun palautteen ihmettelyä ja ohjelmaan liittyvien ajatusten kokoaminen päähän.
+4.5|4|Testien ihmettelyä + Päätin tehdä vielä testit kokonaan uusiksi, ja kokeilla avata ja sulkea sql-connectionin joka välissä. Josko tämä korjaisi olleet ongelmat..
+5.5|3|Testien teko kattamaan kaikki valmiit päätoiminnallisuudet.
+5.5|2|Päiväkirjan toimintojen lisäys: Vesi, aterioiden vähennys päivämäärältä.
 ----|--|----
-28.4|65| YHT TUNTIMÄÄRÄ
+5.5|75| YHT TUNTIMÄÄRÄ
 
 
