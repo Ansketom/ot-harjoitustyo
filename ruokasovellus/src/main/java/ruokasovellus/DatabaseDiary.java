@@ -13,36 +13,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * Päiväkirjaan liittyvät asiat tietokantaan tekevä luokka.
  * @author AnssiKetomäki
  */
 public class DatabaseDiary {
 
     public Database kanta;
     public Connection db;
-    public DatabasePortions DPortions;
+    public DatabasePortions dPortions;
     
     public DatabaseDiary(Database kanta, DatabasePortions dport) throws SQLException {
         this.kanta = kanta;
         this.db = kanta.db;
-        this.DPortions = dport;
+        this.dPortions = dport;
     }
-    public void closeConnection() {
-        try {
-            db.close();
-        } catch (SQLException e) {
-            System.out.println("yhteyden sulku epäonnistui.");
-        }
+    /**
+     * Metodi sulkee ohjelman yhteyden tietokantaan.
+     * @throws java.sql.SQLException
+     */
+    public void closeConnection() throws SQLException {
+        db.close();
     }
     /**
     * Metodi avaa ohjelmalle yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void openConnection() {
-        try {
-            db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
-        } catch (SQLException e) {
-            System.out.println("yhteyden avaus epäonnistui.");
-        }
+    public void openConnection() throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
     }
 
     /**
@@ -74,7 +71,7 @@ public class DatabaseDiary {
 
     /**
      * Metodi palauttaa int-lukuarvona tietokannan päiväkirja -taulusta päivän kohdalle
-     * merkityn juodun vesimäärän
+     * merkityn juodun vesimäärän.
      *
      * @param date Käyttäjän antama päivämäärä
      *
@@ -97,7 +94,7 @@ public class DatabaseDiary {
 
     /**
      * Metodi päivittää tietokannan päiväkirja-tauluun käyttäjän antaman päivämäärän
-     * riville muut arvot tyypillisesti syödyn ruoan päiväkirjaan merkkaamisen yhteydessä
+     * riville muut arvot tyypillisesti syödyn ruoan päiväkirjaan merkkaamisen yhteydessä.
      *
      * @param date Käyttäjän antama päivämäärä
      * @param kcal tietokantaan päivitettävä uusi päivän energiamäärä (kcal/10)
@@ -151,7 +148,7 @@ public class DatabaseDiary {
 
     /**
      * Metodi palauttaa koko päiväkirjataulun sisällön ArrayListina riveittäin
-     * stringiksi muutettuna
+     * stringiksi muutettuna.
      *
      * @return ArrayList, jonka sisältö on merkkijonoiksi muutettu data päiväkirja-taulusta
      */
@@ -173,7 +170,7 @@ public class DatabaseDiary {
 
     /**
      * Metodi palauttaa parametrina annetun päivämäärän kohdalla tietokannan päiväkirja-
-     * taulussa olevat numeroarvotiedot int [] -listana
+     * taulussa olevat numeroarvotiedot int [] -listana.
      *
      * @param date Käyttäjän antama päivämäärä
      *

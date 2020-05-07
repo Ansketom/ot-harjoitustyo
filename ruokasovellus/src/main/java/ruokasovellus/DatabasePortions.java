@@ -13,44 +13,38 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * Ruoka-annoksiin liittyvät asiat tietokantaan tekevä luokka.
  * @author AnssiKetomäki
  */
 public class DatabasePortions {
 
     public Database kanta;
     public Connection db;
-    public DatabaseIncredients DIncredients;
+    public DatabaseIncredients dIncredients;
     
     public DatabasePortions(Database kanta, DatabaseIncredients dincr) throws SQLException {
         this.kanta = kanta;
         this.db = kanta.db;
-        this.DIncredients = dincr;
+        this.dIncredients = dincr;
     }
     /**
     * Metodi sulkee ohjelman yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void closeConnection() {
-        try {
-            db.close();
-        } catch (SQLException e) {
-            System.out.println("yhteyden sulku epäonnistui.");
-        }
+    public void closeConnection() throws SQLException {
+        db.close();
     }
     /**
     * Metodi avaa ohjelmalle yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void openConnection() {
-        try {
-            db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
-        } catch (SQLException e) {
-            System.out.println("yhteyden avaus epäonnistui.");
-        }
+    public void openConnection() throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
     }
 
     /**
      * Metodi palauttaa käyttäjän haluaman aterian ruoka-aineet ja niiden määrät
-     * ArrayListina
+     * ArrayListina.
      *
      * @param name Käyttäjän antama ruoka-annoksen nimi
      *
@@ -76,7 +70,7 @@ public class DatabasePortions {
     }
 
     /**
-     * Metodi lisää halutunnimisen uuden ruoka-annoksen ruoka-annoslistaan
+     * Metodi lisää halutunnimisen uuden ruoka-annoksen ruoka-annoslistaan.
      *
      * @param name Käyttäjän antama ruoka-annoksen nimi
      *
@@ -97,7 +91,7 @@ public class DatabasePortions {
     }
 
     /**
-     * Metodi poistaa halutunnimisen ruoka-annoksen ruoka-annoslistasta
+     * Metodi poistaa halutunnimisen ruoka-annoksen ruoka-annoslistasta.
      *
      * @param name Käyttäjän antama ruoka-annoksen nimi
      *
@@ -120,7 +114,7 @@ public class DatabasePortions {
 
     /**
      * Metodi hakee tietokannan ruoka-ateriat -taulusta aterioiden nimet, ja palauttaa ne
-     * stringinä aakkosjärjestyksessä omilla riveillään
+     * stringinä aakkosjärjestyksessä omilla riveillään.
      *
      * @return String -merkkijono, jossa on tietokannan ruoka-ateriat -taulun aterian nimet riveittäin
      */
@@ -142,7 +136,7 @@ public class DatabasePortions {
 
     /**
      * Metodi palauttaa tietokannan ateriat -taulusta sen aterian id:n, jonka nimen se saa
-     * parametrina
+     * parametrina.
      *
      * @param name nimi sille aterialle, jonka id halutaan
      *
@@ -164,7 +158,7 @@ public class DatabasePortions {
 
     /**
      * Metodi palauttaa käyttäjän antaman nimisen aterian ruoka-aineet ja niiden määrät
-     * Stringinä ryhmiteltynä samalle riville peräkkäin
+     * Stringinä ryhmiteltynä samalle riville peräkkäin.
      *
      * @param name Käyttäjän antama ruoka-aterian nimi
      *
@@ -189,7 +183,7 @@ public class DatabasePortions {
 
     /**
      * Metodi palauttaa koko ruoka-annoksien sisältötaulun, jossa indeksinumerot
-     * on korvattuna niiden tekstimuotoisilla nimillä
+     * on korvattuna niiden tekstimuotoisilla nimillä.
      *
      * @return merkkijono, jossa seliterivin alla riveittäin koko ruoka-annoksien sisältötaulu
      */
@@ -211,7 +205,7 @@ public class DatabasePortions {
 
     /**
      * Metodi poistaa ruoka-annoksen sisältötaulusta käyttäjän haluaman ruoka-aineen
-     * koko määrän käyttäjän ilmoittamasta ruoka-annoksesta
+     * koko määrän käyttäjän ilmoittamasta ruoka-annoksesta.
      *
      * @param portion Käyttäjän antama ruoka-annoksen nimi
      * @param incredient Käyttäjän antama ruoka-aineen nimi
@@ -221,7 +215,7 @@ public class DatabasePortions {
     public boolean deletePortionPart(String portion, String incredient) {
         System.out.println("Poistetaan ruoka-annoksesta" + portion + " ruoka-ainetta " + incredient);
         int portionId = this.getPortionId(portion);
-        int incredientId = DIncredients.getIncredientId(incredient);
+        int incredientId = dIncredients.getIncredientId(incredient);
         System.out.println("annosid " + portionId + " aineid :" + incredientId);
         try {
             this.openConnection();
@@ -239,7 +233,7 @@ public class DatabasePortions {
 
     /**
      * Metodi lisää ruoka-annoksen sisältötauluun haluttuun ruoka-annokseen
-     * halutun määrän haluttua ruoka-ainetta
+     * halutun määrän haluttua ruoka-ainetta.
      *
      * @param portion Käyttäjän antama ruoka-annoksen nimi
      * @param incredient Käyttäjän antama ruoka-aineen nimi

@@ -86,6 +86,6 @@ Tauluja ei voi poistaa joka testin välissä, koska kun tauluille tulee riippuvu
         assertTrue(kanta.dropTables());
         assertFalse(kanta.dropTables());
         assertTrue(kanta.createTables());
-        }
+    }
     
 }

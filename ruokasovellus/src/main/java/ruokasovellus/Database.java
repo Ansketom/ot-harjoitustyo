@@ -7,7 +7,7 @@ import java.sql.Connection;
 
 
 /**
-* Tietokantaa käyttävä luokka
+* Tietokannan tekniset asiat tekevä luokka, joka esim luo taulut.
 * 
 */
 
@@ -22,7 +22,7 @@ public class Database {
         
     }
     /**
-    * Metodi luo tietokannan taulut ja on ajastettu toimimaan kun ikkuna aukeaa.
+    * Metodi luo tietokannan taulut ja on ajastettu toimimaan kun käyttöliittymä aukeaa.
     * 
     * @return totuusarvo menivätkö tietokantatoiminnot läpi poikkeusta
     */
@@ -69,23 +69,17 @@ public class Database {
     }
     /**
     * Metodi sulkee ohjelman yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void closeConnection() {
-        try {
-            db.close();
-        } catch (SQLException e) {
-            System.out.println("yhteyden sulku epäonnistui.");
-        }
+    public void closeConnection() throws SQLException {
+        db.close();
     }
     /**
     * Metodi avaa ohjelmalle yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void openConnection() {
-        try {
-            db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
-        } catch (SQLException e) {
-            System.out.println("yhteyden avaus epäonnistui.");
-        }
+    public void openConnection() throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
     }
     
 }

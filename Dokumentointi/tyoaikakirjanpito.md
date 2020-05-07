@@ -35,8 +35,8 @@ Päivä | aika(h) | Mitä tein
 6.5|2|Testien teko loppuun. Loppujen ohjelman valmiiksisaantiin tarvittavien juttujen kartoitus.
 6.5|4|Javadoc käyttöönotto ja merkintöjen teko koko database-luokkaan. Piti tässäkin muutta pom:ia että lähti toimimaan.
 7.5|3|Yli 500 rivin Database -luokan jako neljään tietokantatoimintoja tekevään luokkaan: tietokantatoiminnot, ruoka-aineet, ruoka-annokset, päiväkirja.
-7.5|2|Testien refaktorointi uudelle luokkajaolle.
+7.5|3|Testien refaktorointi uudelle luokkajaolle. Javadoc merkintöjen parannus yms korjailut.
 ----|--|----
-5.5|81| YHT TUNTIMÄÄRÄ
+7.5|87| YHT TUNTIMÄÄRÄ
 
 

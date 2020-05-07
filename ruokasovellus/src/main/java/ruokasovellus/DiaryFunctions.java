@@ -5,23 +5,27 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-
+/**
+* Päiväkirjan apuluokka, jossa on toimintoja joita tarvitaan käyttöliittymän ja
+* tietokantatoimintojen välissä.
+* @author AnssiKetomäki
+*/
 
 public class DiaryFunctions {
     DateTimeFormatter date = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     Database kanta;
-    DatabaseIncredients DIncredients;
-    DatabasePortions DPortions;
-    DatabaseDiary DDiary;
+    DatabaseIncredients dIncredients;
+    DatabasePortions dPortions;
+    DatabaseDiary dDiary;
 
-    public DiaryFunctions(Database kanta, DatabaseIncredients DI, DatabasePortions DP, DatabaseDiary DD) {
+    public DiaryFunctions(Database kanta, DatabaseIncredients dI, DatabasePortions dP, DatabaseDiary dD) {
         this.kanta = kanta;
-        this.DIncredients = DI;
-        this.DPortions = DP;
-        this.DDiary = DD;
+        this.dIncredients = dI;
+        this.dPortions = dP;
+        this.dDiary = dD;
     }
     /**
-    * Metodi palauttaa tämän päivän päivämäärän merkkijonona
+    * Metodi palauttaa tämän päivän päivämäärän merkkijonona.
     * 
     * @return String jossa tämän päivän päivämäärä muodossa dd.MM.yyyy
     */
@@ -38,12 +42,12 @@ public class DiaryFunctions {
     * @return totuusarvo siitä, menikö päivämäärän tietokantaan lisäys läpi
     */
     public boolean addDate(String dayValue) {
-        return DDiary.addDateToDiary(dayValue);
+        return dDiary.addDateToDiary(dayValue);
     }
     /**
     * Metodi suorittaa yhteenlaskun päiväkirjatauluun päivämäärän kohdalle merkityistä
     * arvoista ja käyttäjän osoittamasta ateriasta, ja päivittää summat
-    * päiväkirjataulun päivämäärän riville
+    * päiväkirjataulun päivämäärän riville.
     * 
     * @param dayValue päivämäärä dd.MM.yyyy
     * @param meal Summattava ruoka-annos
@@ -51,23 +55,23 @@ public class DiaryFunctions {
     * @return totuusarvo siitä, menikö summan tuloksen lisäys tietokantaan läpi
     */
     public boolean addMeal(String dayValue, String meal) {
-        int [] daydata = DDiary.getDiaryDayData(dayValue);
+        int [] daydata = dDiary.getDiaryDayData(dayValue);
         int kcal = daydata [0];
         int ch = daydata [1];
         int prot = daydata [2];
         int fat = daydata [3];
         
-        ArrayList<String> mealdata = DPortions.getPortionContentsInList(meal);
+        ArrayList<String> mealdata = dPortions.getPortionContentsInList(meal);
         for (String row : mealdata) {
             String [] parts = row.split(":");
             int grams = Integer.valueOf(row.replaceAll("\\D+", ""));
-            int [] mealvalues = DIncredients.getIncredientDataInInt(parts[0]);
+            int [] mealvalues = dIncredients.getIncredientDataInInt(parts[0]);
             kcal += (mealvalues[0] * (1.0 * grams / 100));
             ch += (mealvalues[1] * (1.0 * grams / 100));
             prot += (mealvalues[2] * (1.0 * grams / 100));
             fat += (mealvalues[3] * (1.0 * grams / 100));
         }
-        return DDiary.updateDiary(dayValue, kcal, ch, prot, fat);
+        return dDiary.updateDiary(dayValue, kcal, ch, prot, fat);
     }
     /**
     * Metodi suorittaa vähennyslaskun päiväkirjatauluun päivämäärän kohdalle merkityistä
@@ -80,37 +84,36 @@ public class DiaryFunctions {
     * @return totuusarvo siitä, menikö vähennyslaskun tuloksen lisäys tietokantaan läpi
     */
     public boolean substractMeal(String dayValue, String meal) {
-        int [] daydata = DDiary.getDiaryDayData(dayValue);
+        int [] daydata = dDiary.getDiaryDayData(dayValue);
         int kcal = daydata [0];
         int ch = daydata [1];
         int prot = daydata [2];
         int fat = daydata [3];
-        
-        ArrayList<String> mealdata = DPortions.getPortionContentsInList(meal);
+        ArrayList<String> mealdata = dPortions.getPortionContentsInList(meal);
         for (String row : mealdata) {
             String [] parts = row.split(":");
             int grams = Integer.valueOf(row.replaceAll("\\D+", ""));
-            int [] mealvalues = DIncredients.getIncredientDataInInt(parts[0]);
+            int [] mealvalues = dIncredients.getIncredientDataInInt(parts[0]);
             kcal -= (mealvalues[0] * (1.0 * grams / 100));
             ch -= (mealvalues[1] * (1.0 * grams / 100));
             prot -= (mealvalues[2] * (1.0 * grams / 100));
             fat -= (mealvalues[3] * (1.0 * grams / 100));
         }
-        if (kcal < 0 || ch < 0 || prot < 0 || fat < 0){
+        if (kcal < 0 || ch < 0 || prot < 0 || fat < 0) {
             return false;
         }
-        return DDiary.updateDiary(dayValue, kcal, ch, prot, fat);
-        }
+        return dDiary.updateDiary(dayValue, kcal, ch, prot, fat);
+    }
     /**
     * Metodi hakee päivämäärän kohdalle merkityn vesimäärän 
-    * tietokannan päiväkirjataulusta tietokantaa käyttävän luokan metodin avulla
+    * tietokannan päiväkirjataulusta tietokantaa käyttävän luokan metodin avulla.
     * 
     * @param dayValue päivämäärä dd.MM.yyyy
     * 
     * @return päivämäärän kohdalla päiväkirjataulussa ollut vesimäärä desilitroina
     */
-    public int getWater (String dayValue) {
-        return DDiary.getDiaryWater(dayValue);
+    public int getWater(String dayValue) {
+        return dDiary.getDiaryWater(dayValue);
     }
     /**
     * Metodi käyttää tietokantaa käyttävän luokan metodeita hakeakseen päivämäärän
@@ -122,9 +125,9 @@ public class DiaryFunctions {
     * 
     * @return totuusarvo siitä saiko metodi lopuksi päivitettyä uuden arvon tietokantaan
     */
-    public boolean addWater (String dayValue, int desiliters) {
+    public boolean addWater(String dayValue, int desiliters) {
         int waterAmount = this.getWater(dayValue);
-        if((desiliters + waterAmount) > 0) {
+        if ((desiliters + waterAmount) > 0) {
             waterAmount += desiliters;
         }
         return this.updateWater(dayValue, waterAmount);
@@ -132,15 +135,15 @@ public class DiaryFunctions {
     /**
     * Metodi käyttää tietokantaa käyttävän luokan metodia päivittääkseen parametrina
     * annetun vesimäärän parametrina annetun päivämäärän kohdalle tietokannan
-    * päiväkirjatauluun
+    * päiväkirjatauluun.
     * 
     * @param dayValue päivämäärä dd.MM.yyyy
     * @param waterAmount vesimäärä desilitroina
     * 
     * @return totuusarvo siitä saiko metodi lopuksi päivitettyä uuden arvon tietokantaan
     */
-    public boolean updateWater (String dayValue, int waterAmount) {
-        return DDiary.updateDiaryWater(dayValue, waterAmount);
+    public boolean updateWater(String dayValue, int waterAmount) {
+        return dDiary.updateDiaryWater(dayValue, waterAmount);
     }
     /**
     * Metodi käyttää tietokantaa käyttävän luokan metodia hakeakseen päiväkirjan sisällön
@@ -149,7 +152,7 @@ public class DiaryFunctions {
     * @return merkkijono, jossa on koko päiväkirjan sisältö rivitettynä
     */
     public String diaryToString() {
-        ArrayList<String> diaryData = DDiary.getDiaryData();
+        ArrayList<String> diaryData = dDiary.getDiaryData();
         String dataString = "";
         for (String row : diaryData) {
             dataString += row + "\n";

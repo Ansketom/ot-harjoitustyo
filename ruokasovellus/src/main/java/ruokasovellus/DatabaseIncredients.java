@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 
 
 /**
- *
+ * Ruoka-aineisiin liittyvät asiat tietokantaan tekevä luokka.
  * @author AnssiKetomäki
  */
 public class DatabaseIncredients {
@@ -20,30 +20,24 @@ public class DatabaseIncredients {
     Database kanta;
     Connection db;
 
-    public DatabaseIncredients (Database kanta) throws SQLException {
+    public DatabaseIncredients(Database kanta) throws SQLException {
         this.kanta = kanta;
         this.db = kanta.db;
         
     }
     /**
     * Metodi sulkee ohjelman yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void closeConnection() {
-        try {
-            db.close();
-        } catch (SQLException e) {
-            System.out.println("yhteyden sulku epäonnistui.");
-        }
+    public void closeConnection() throws SQLException {
+        db.close();
     }
     /**
     * Metodi avaa ohjelmalle yhteyden tietokantaan.
+     * @throws java.sql.SQLException
     */
-    public void openConnection() {
-        try {
-            db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
-        } catch (SQLException e) {
-            System.out.println("yhteyden avaus epäonnistui.");
-        }
+    public void openConnection() throws SQLException {
+        db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
     }
 
     /**
@@ -76,7 +70,7 @@ public class DatabaseIncredients {
         }
     }
     /**
-    * Metodi poistaa tietokannasta annetunnimisen ruoka-aineen
+    * Metodi poistaa tietokannasta annetunnimisen ruoka-aineen.
     * 
     * @param name Käyttäjän antama ruoka-aineen nimi 
     * 
@@ -98,7 +92,7 @@ public class DatabaseIncredients {
     }
     /**
     * Metodi listaa tietokantaan lisätyt ruoka-aineet Stringiksi riveittäin
-    * otsikkorivin ja seliterivin alle
+    * otsikkorivin ja seliterivin alle.
     *  
     * @return String, jossa otsikkorivin ja seliterivin alla tietokantaan lisätyt ruoka-
     * aineet riveittäin tietoineen
@@ -126,7 +120,7 @@ public class DatabaseIncredients {
 
     /**
      * Metodi palauttaa sille parametrina annettua ruoka-aineen nimeä vastaavan
-     * id:n
+     * id:n.
      *
      * @param name käyttäjän antama ruoka-aineen nimi
      *
@@ -148,7 +142,7 @@ public class DatabaseIncredients {
 
     /**
      * Metodi palauttaa parametrina annetun ruoka-aineen integer -lukuarvoiset tiedot
-     * int -listana
+     * int -listana.
      *
      * @param name Käyttäjän antama ruoka-aineen nimi
      *
