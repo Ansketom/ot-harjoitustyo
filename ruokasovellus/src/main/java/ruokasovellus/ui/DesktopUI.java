@@ -14,13 +14,18 @@ import javafx.event.ActionEvent;
 import javafx.geometry.*;
 import javafx.application.Application;
 import java.sql.SQLException;
+import javafx.event.EventHandler;
 import ruokasovellus.Database;
+import ruokasovellus.DatabaseIncredients;
+import ruokasovellus.DatabasePortions;
+import ruokasovellus.DatabaseDiary;
 import ruokasovellus.DiaryFunctions;
 
 
 
 /**
- *
+ * Desktop-käyttöliittymän ruokasovellukseen luova luokka.
+ * 
  * @author AnssiKetomäki
  */
 public class DesktopUI extends Application {
@@ -28,6 +33,9 @@ public class DesktopUI extends Application {
     // private Scene view;
 
     private Database kanta;
+    private DatabaseIncredients DIncredients;
+    private DatabasePortions DPortions;
+    private DatabaseDiary DDiary;
     private DiaryFunctions diary;
     private TableView table = new TableView();
  
@@ -37,7 +45,10 @@ public class DesktopUI extends Application {
     public void start(Stage window) throws Exception, SQLException {
         Database kanta = new Database();
         kanta.createTables();
-        DiaryFunctions diary = new DiaryFunctions(kanta);
+        DatabaseIncredients DIncredients = new DatabaseIncredients(kanta);
+        DatabasePortions DPortions = new DatabasePortions(kanta, DIncredients);
+        DatabaseDiary DDiary = new DatabaseDiary(kanta, DPortions);
+        DiaryFunctions diary = new DiaryFunctions(kanta, DIncredients, DPortions, DDiary);
         
         BorderPane layout = new BorderPane();
         //sivun alalaidassa olevat napit jolla voi vaihtaa näkymää
@@ -92,32 +103,33 @@ public class DesktopUI extends Application {
         incredientsList.setText("");
         refreshIncredientsList.setOnAction((ActionEvent e)-> {
             //String incredientsInList = kanta.listIncredientsToString();
-            incredientsList.setText(kanta.listIncredientsToString());
+            incredientsList.setText(DIncredients.listIncredientsToString());
         });
         //ruoka-aineen lisäys
         addIncr.setOnAction((ActionEvent e)-> {
-            
+
             String incredName = incredientInput.getText();
             String energy = kcalInput.getText();
             String carbohyd = chInput.getText();
             String protein = protInput.getText();
             String fats = fatInput.getText();
-            
+
             int ene = Integer.valueOf(energy.replaceAll("\\D+", ""));
             int ch = Integer.valueOf(carbohyd.replaceAll("\\D+", ""));
             int prot = Integer.valueOf(protein.replaceAll("\\D+", ""));
             int fat = Integer.valueOf(fats.replaceAll("\\D+", ""));
-            
-            boolean iadd = kanta.addIncredient(incredName, ene, ch, prot, fat);
+
+            boolean iadd = DIncredients.addIncredient(incredName, ene, ch, prot, fat);
             incredientsPageErrorMessage.setText("lisäys onnistui: " + iadd);
-            incredientsList.setText(kanta.listIncredientsToString());
+            incredientsList.setText(DIncredients.listIncredientsToString());
+            
         });
         //Ruoka-aineen nollaus
         deleteIncr.setOnAction((ActionEvent e)-> {
             incredientsPageErrorMessage.setText("Nollataksesi ruoka-aineen jota ei enää ole sidottu annokseen, syötä Kcal -riville arvo: -1");
             if (kcalInput.getText().equals("-1")) {
-                kanta.deleteIncredient(incredientInput.getText());
-                incredientsList.setText(kanta.listIncredientsToString());
+                DIncredients.deleteIncredient(incredientInput.getText());
+                incredientsList.setText(DIncredients.listIncredientsToString());
             }
         });
         
@@ -170,32 +182,32 @@ public class DesktopUI extends Application {
         Label mealPageErrorMessage = new Label("");
         //Actions
         addMeal.setOnAction((ActionEvent e) -> {
-            kanta.addPortion(mealNameInput.getText());
+            DPortions.addPortion(mealNameInput.getText());
         });
         addIncrToMeal.setOnAction((ActionEvent e) -> {
             String portName = mealNameInput.getText();
-            int portNameInt = kanta.getPortionId(portName);
+            int portNameInt = DPortions.getPortionId(portName);
             String portIncrName = mealPartField.getText();
-            int portIncrNameInt = kanta.getIncredientId(portIncrName);
+            int portIncrNameInt = DIncredients.getIncredientId(portIncrName);
             int portAmount = Integer.valueOf(mealPartAmountField.getText());
-            kanta.addDishContents(portNameInt, portIncrNameInt, portAmount);
+            DPortions.addDishContents(portNameInt, portIncrNameInt, portAmount);
         });
         deleteFromMeal.setOnAction((ActionEvent e) -> {
-            kanta.deletePortionPart(mealNameInput.getText(), mealPartField.getText());
-            mealList.setText(kanta.listIncredientsToString());
+            DPortions.deletePortionPart(mealNameInput.getText(), mealPartField.getText());
+            mealList.setText(DIncredients.listIncredientsToString());
         });
         listAllMeals.setOnAction((ActionEvent e) -> {
-            mealList.setText(kanta.getDishContentToString());
+            mealList.setText(DPortions.getDishContentToString());
         });
         listMealNames.setOnAction((ActionEvent e) -> {
-            mealList.setText(kanta.getPortionNames());
+            mealList.setText(DPortions.getPortionNames());
         });
         listMealContents.setOnAction((ActionEvent e) -> {
-            String mealsList = kanta.getPortionContentsWithName(mealNameInput.getText());
+            String mealsList = DPortions.getPortionContentsWithName(mealNameInput.getText());
             mealList.setText(mealsList);
         });
         bringIncredientsList.setOnAction((ActionEvent e)-> {
-            mealList.setText(kanta.listIncredientsToString());
+            mealList.setText(DIncredients.listIncredientsToString());
         });
         
         mealInput.getChildren().addAll(mealNameLabel, mealNameInput, mealPartLabel, mealPartField, mealPartAmountLabel, mealPartAmountField);
@@ -240,7 +252,7 @@ public class DesktopUI extends Application {
         Label waterUnit = new Label ("desilitraa");
         TextField waterAmount = new TextField();
         
-        Label portionsInData = new Label(kanta.getPortionNames());
+        Label portionsInData = new Label(DPortions.getPortionNames());
         
         Button showDiaryData = new Button("Update data");
         
@@ -250,27 +262,27 @@ public class DesktopUI extends Application {
             dayInput.setText(diary.getDate());
         });
         formatMealList.setOnAction((ActionEvent e)-> {
-            diary.addDate(kanta, dayInput.getText());
+            diary.addDate(dayInput.getText());
             diaryData.setText(diary.diaryToString());
         });
         sumAMeal.setOnAction((ActionEvent e)-> {
-            diary.addMeal(kanta, dayInput.getText(), diaryInput.getText());
+            diary.addMeal(dayInput.getText(), diaryInput.getText());
             diaryData.setText(diary.diaryToString());
         });
         substractAMeal.setOnAction((ActionEvent e)-> {
-            diary.substractMeal(kanta, dayInput.getText(), diaryInput.getText());
+            diary.substractMeal(dayInput.getText(), diaryInput.getText());
             diaryData.setText(diary.diaryToString());
         });
         showDiaryData.setOnAction((ActionEvent e)-> {
             diaryData.setText(diary.diaryToString());
         });
         getWaterAmount.setOnAction((ActionEvent e)-> {
-            int waterA = diary.getWater(kanta, dayInput.getText());
+            int waterA = diary.getWater(dayInput.getText());
             waterAmount.setText(String.valueOf(waterA));
         });
         exportWater.setOnAction((ActionEvent e)-> {
             int wAmount = Integer.valueOf(waterAmount.getText());
-            diary.updateWater(kanta, dayInput.getText(), wAmount);
+            diary.updateWater(dayInput.getText(), wAmount);
             diaryData.setText(diary.diaryToString());
         });
         
@@ -285,12 +297,12 @@ public class DesktopUI extends Application {
         // Setup primary stage
         first.setOnAction((event)-> {
             layout.setCenter(incredientPage);
-            incredientsList.setText(kanta.listIncredientsToString());
+            incredientsList.setText(DIncredients.listIncredientsToString());
         });
         second.setOnAction((event)-> layout.setCenter(mealManagePage));
         third.setOnAction((event)-> { 
             layout.setCenter(diaryPage);
-            portionsInData.setText(kanta.getPortionNames());
+            portionsInData.setText(DPortions.getPortionNames());
         });
         
         layout.setCenter(incredientPage);

@@ -32,7 +32,11 @@ Päivä | aika(h) | Mitä tein
 4.5|4|Testien ihmettelyä + Päätin tehdä vielä testit kokonaan uusiksi, ja kokeilla avata ja sulkea sql-connectionin joka välissä. Josko tämä korjaisi olleet ongelmat..
 5.5|3|Testien teko kattamaan kaikki valmiit päätoiminnallisuudet.
 5.5|2|Päiväkirjan toimintojen lisäys: Vesi, aterioiden vähennys päivämäärältä.
+6.5|2|Testien teko loppuun. Loppujen ohjelman valmiiksisaantiin tarvittavien juttujen kartoitus.
+6.5|4|Javadoc käyttöönotto ja merkintöjen teko koko database-luokkaan. Piti tässäkin muutta pom:ia että lähti toimimaan.
+7.5|3|Yli 500 rivin Database -luokan jako neljään tietokantatoimintoja tekevään luokkaan: tietokantatoiminnot, ruoka-aineet, ruoka-annokset, päiväkirja.
+7.5|2|Testien refaktorointi uudelle luokkajaolle.
 ----|--|----
-5.5|75| YHT TUNTIMÄÄRÄ
+5.5|81| YHT TUNTIMÄÄRÄ
 
 

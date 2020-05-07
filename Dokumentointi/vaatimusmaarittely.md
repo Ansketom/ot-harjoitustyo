@@ -13,7 +13,7 @@ Sovellus aukeaa ensimmäisenä näkymään, jossa käyttäjä voi laskea päivä
 -Käyttäjä voi poistaa sovelluksesta ruoka-aineen, tai muokata sen tietoja.(Näkymä1)  
 -Käyttäjä voi muodostaa ruoka-aineista aterian. (Tietokantataulu 2 ja 3)(Näkymä2)  
 -Käyttäjä voi poistaa sovelluksesta aterian, tai muokata sen sisältöä. (Näkymä2)  
--Käyttäjä voi laskea aterioita yhteen ja saada siten selville päivän ruokien energiamäärän ja makroravinnemäärät
+-Käyttäjä voi laskea aterioita yhteen ja saada siten selville päivän ruokien energiamäärän (kcal) ja makroravinnemäärät
  (gramoina: hiilihydraattia, proteiinia, rasvaa)(Tietokantataulu 4)(Näkymä3).  
 -Käyttäjä voi vaihtaa näkymää välilehtien selaamisen tapaan ohjelmassa olevien kolmen(3) näkymän välillä.  
 
