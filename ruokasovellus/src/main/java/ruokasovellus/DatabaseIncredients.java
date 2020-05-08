@@ -9,6 +9,7 @@ import java.sql.*;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 
 /**
@@ -98,7 +99,7 @@ public class DatabaseIncredients {
     * aineet riveittäin tietoineen
     */
     public String listIncredientsToString() {
-        String list = "Ruoka-aineslista \n(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g))";
+        String list = "Ruoka-aineslista \n(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)";
         try {
             this.openConnection();
             PreparedStatement p = db.prepareStatement("SELECT name, kcal, ch, prot, fat FROM Incredients i GROUP BY name");
@@ -116,6 +117,29 @@ public class DatabaseIncredients {
         } catch (SQLException e) {
             return "VIRHE: Ruoka-aineiden listaaminen epäonnistui.";
         }
+    }
+    public ArrayList<String> listIncredientsArrayList() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add("Ruoka-aineslista");
+        data.add("Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)");
+        try {
+            this.openConnection();
+            PreparedStatement p = db.prepareStatement("SELECT name, kcal, ch, prot, fat FROM Incredients i GROUP BY name");
+            ResultSet r = p.executeQuery();
+            
+            while (r.next()) {
+                double kcal = r.getInt("kcal");
+                double hh = r.getInt("ch");
+                double protein = r.getInt("prot");
+                double rasva = r.getInt("fat");
+                data.add(r.getString("name") + ": " + kcal / 10 + "(kcal), h:" + hh / 10 + ", p:" + protein / 10 + ", r:" + rasva / 10);
+            }
+            this.closeConnection();
+                
+        } catch (SQLException e) {
+            System.out.print("VIRHE: Ruoka-aineiden listaaminen epäonnistui.");
+        }
+        return data;
     }
 
     /**

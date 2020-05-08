@@ -116,22 +116,22 @@ public class DatabasePortions {
      * Metodi hakee tietokannan ruoka-ateriat -taulusta aterioiden nimet, ja palauttaa ne
      * stringinä aakkosjärjestyksessä omilla riveillään.
      *
-     * @return String -merkkijono, jossa on tietokannan ruoka-ateriat -taulun aterian nimet riveittäin
+     * @return ArrayList String-merkkijonoja, jossa on tietokannan ruoka-ateriat -taulun aterian nimet
      */
-    public String getPortionNames() {
+    public ArrayList<String> getPortionNames() {
+        ArrayList<String> ateriat = new ArrayList<>();
         try {
             this.openConnection();
-            String portions = "";
             PreparedStatement p = this.db.prepareStatement("SELECT * FROM Portions ORDER BY name");
             ResultSet r = p.executeQuery();
             while (r.next()) {
-                portions = portions + r.getString("name") + "\n";
+                ateriat.add(r.getString("name"));
             }
             this.closeConnection();
-            return portions;
         } catch (SQLException e) {
-            return "VIRHE: ei onnistuttu etsimään tauluja.";
+            System.out.print("VIRHE: ei onnistuttu etsimään tauluja.");
         }
+        return ateriat;
     }
 
     /**
@@ -164,21 +164,23 @@ public class DatabasePortions {
      *
      * @return Merkkijono, jossa alussa on aterian nimi, jota seuraa sen ruoka-aineosat ja määrät.
      */
-    public String getPortionContentsWithName(String name) {
-        String portionContent = name + ":";
+    public ArrayList<String> getPortionContentsWithName(String name) {
+        ArrayList<String> data = new ArrayList<>();
+        data.add(name + ":");
         try {
             this.openConnection();
             PreparedStatement p = this.db.prepareStatement("SELECT I.name AS incr, C.amount AS gr from Incredients I, Portions P LEFT JOIN DishContents C ON I.id=C.incredient_id WHERE P.id=C.portion_id AND P.name=? GROUP BY I.name");
             p.setString(1, name);
             ResultSet r = p.executeQuery();
             while (r.next()) {
-                portionContent = portionContent + " " + r.getString("incr") + "(" + r.getInt("gr") + "g)";
+                data.add(r.getString("incr") + "(" + r.getInt("gr") + "g)");
             }
             this.closeConnection();
-            return portionContent;
+            
         } catch (SQLException e) {
-            return "VIRHE: ei onnistuttu etsimään annoksen sisältöä.";
+            System.out.print("VIRHE: ei onnistuttu etsimään annoksen sisältöä.");
         }
+        return data;
     }
 
     /**
@@ -201,6 +203,22 @@ public class DatabasePortions {
         } catch (SQLException e) {
             return "VIRHE: ei onnistuttu hakemaan annostensisältödataa.";
         }
+    }
+    public ArrayList<String> getDishContentArrayList() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add("annos, ruoka-aine , määrä(g):");
+        try {
+            this.openConnection();
+            PreparedStatement p = this.db.prepareStatement("SELECT P.name AS pname, I.name AS iname, D.amount AS damount FROM DishContents D, Incredients I, Portions P WHERE I.id=D.incredient_id AND P.id=D.portion_id;");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                data.add((r.getString("pname")) + ", " + (r.getString("iname")) + ", " + (r.getInt("damount")));
+            }
+            this.closeConnection();
+        } catch (SQLException e) {
+            System.out.print("VIRHE: ei onnistuttu hakemaan annostensisältödataa.");
+        }
+        return data;
     }
 
     /**
@@ -252,7 +270,7 @@ public class DatabasePortions {
             this.closeConnection();
             return true;
         } catch (SQLException e) {
-            System.out.println("Annoksen osan lisääminen epäonnistui.");
+            System.out.print("Annoksen osan lisääminen epäonnistui.");
             return false;
         }
     }

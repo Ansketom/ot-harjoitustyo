@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,15 +71,34 @@ public class DatabaseIncredientsTest {
         Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
         Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
         assertEquals("Ruoka-aineslista \n" +
-        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g))\n" +
+        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)\n" +
         "kaurahiutale: 362.0(kcal), h:54.0, p:14.0, r:7.5\n" + 
         "oliiviöljy: 900.0(kcal), h:0.0, p:0.0, r:100.0", Dincr.listIncredientsToString());
         Dincr.deleteIncredient("kaurahiutale");
         Dincr.deleteIncredient("oliiviöljy");
         assertEquals("Ruoka-aineslista \n" +
-        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g))", Dincr.listIncredientsToString());
+        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)", Dincr.listIncredientsToString());
     
     }
+    @Test
+    public void listIncredientsArrayListWorks() throws SQLException {
+        
+        Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
+        Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
+        ArrayList<String> testi = new ArrayList<>();
+        testi.add("Ruoka-aineslista");
+        testi.add("Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)");
+        testi.add("kaurahiutale: 362.0(kcal), h:54.0, p:14.0, r:7.5");
+        testi.add("oliiviöljy: 900.0(kcal), h:0.0, p:0.0, r:100.0");
+        assertEquals(testi, Dincr.listIncredientsArrayList());
+        Dincr.deleteIncredient("kaurahiutale");
+        Dincr.deleteIncredient("oliiviöljy");
+        testi.remove(2);
+        testi.remove(2);
+        assertEquals(testi, Dincr.listIncredientsArrayList());
+    
+    }
+    
     @Test
     public void incredientNamesAreUniqueAndListIncredientsToStringWorks() throws SQLException {
         
@@ -89,9 +109,29 @@ public class DatabaseIncredientsTest {
         Dincr.addIncredient("oliiviöljy", 1117, 200, 4460, 423);
         Dincr.addIncredient("oliiviöljy", 1167, 240, 440, 4553);
         assertEquals("Ruoka-aineslista \n" +
-        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g))\n" +
+        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)\n" +
         "kaurahiutale: 362.0(kcal), h:54.0, p:14.0, r:7.5\n" + 
         "oliiviöljy: 900.0(kcal), h:0.0, p:0.0, r:100.0", Dincr.listIncredientsToString());
+        Dincr.deleteIncredient("kaurahiutale");
+        Dincr.deleteIncredient("oliiviöljy");
+    }
+    @Test
+    public void incredientNamesAreUniqueAndListIncredientsArrayListWorks() throws SQLException {
+        
+        Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
+        Dincr.addIncredient("kaurahiutale", 1167, 200, 40, 23);
+        Dincr.addIncredient("kaurahiutale", 116, 20, 4, 2);
+        Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
+        Dincr.addIncredient("oliiviöljy", 1117, 200, 4460, 423);
+        Dincr.addIncredient("oliiviöljy", 1167, 240, 440, 4553);
+        ArrayList<String> testi = new ArrayList<>();
+        testi.add("Ruoka-aineslista");
+        testi.add("Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)");
+        testi.add("kaurahiutale: 362.0(kcal), h:54.0, p:14.0, r:7.5");
+        testi.add("oliiviöljy: 900.0(kcal), h:0.0, p:0.0, r:100.0");
+        assertEquals(testi, Dincr.listIncredientsArrayList());
+        Dincr.deleteIncredient("kaurahiutale");
+        Dincr.deleteIncredient("oliiviöljy");
     }
     @Test
     public void getIncredientIdReturnsInt() throws SQLException {
@@ -129,6 +169,13 @@ public class DatabaseIncredientsTest {
     public void listIncredientsToStringCatchesError() throws SQLException {
         kanta.dropTables();
         assertEquals("VIRHE: Ruoka-aineiden listaaminen epäonnistui.", Dincr.listIncredientsToString());
+        kanta.createTables();
+    }
+    @Test
+    public void listIncredientsArrayListCatchesError() throws SQLException {
+        kanta.dropTables();
+        Dincr.listIncredientsArrayList();
+        assertEquals("VIRHE: Ruoka-aineiden listaaminen epäonnistui.", outContent.toString());
         kanta.createTables();
     }
     @Test

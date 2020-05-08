@@ -107,12 +107,17 @@ public class DatabasePortionsTest {
     @Test
     public void getPortionNamesReturnsPortionNames() throws SQLException {
         Dport.addPortion("aamupuuro");
-        Dport.addPortion("pakastepitsaMozzarella");
+        Dport.addPortion("pakastepitsaMotsarella");
         Dport.addPortion("banaaniJaRahka");
-        assertEquals("aamupuuro\nbanaaniJaRahka\npakastepitsaMozzarella\n", Dport.getPortionNames());
+        ArrayList<String> testi = new ArrayList<>();
+        testi.add("aamupuuro");
+        testi.add("banaaniJaRahka");
+        testi.add("pakastepitsaMotsarella");
+        assertEquals(testi, Dport.getPortionNames());
         Dport.deletePortion("aamupuuro");
         Dport.deletePortion("pakastepitsaMozzarella");
         Dport.deletePortion("banaaniJaRahka");
+       
     }
     @Test
     public void getPortionContentsWithNameWorks() throws SQLException {
@@ -125,12 +130,22 @@ public class DatabasePortionsTest {
         Dport.addDishContents(1, 2, 10);
         Dport.addDishContents(1, 3, 150);
         Dport.addDishContents(1, 4, 50);
-        assertEquals("aamupuuro: kaurahiutale(100g) kevytmaito(150g) oliiviöljy(10g) puolukka(50g)", Dport.getPortionContentsWithName("aamupuuro"));
+        ArrayList<String> testi = new ArrayList<>();
+        testi.add("aamupuuro:");
+        testi.add("kaurahiutale(100g)");
+        testi.add("kevytmaito(150g)");
+        testi.add("oliiviöljy(10g)");
+        testi.add("puolukka(50g)");
+        assertEquals(testi, Dport.getPortionContentsWithName("aamupuuro"));
         Dport.deletePortionPart("aamupuuro", "kaurahiutale");
         Dport.deletePortionPart("aamupuuro", "oliiviöljy");
         Dport.deletePortionPart("aamupuuro", "kevytmaito");
         Dport.deletePortionPart("aamupuuro", "puolukka");
         Dport.deletePortion("aamupuuro");
+        Dincr.deleteIncredient("kaurahiutale");
+        Dincr.deleteIncredient("kevytmaito");
+        Dincr.deleteIncredient("oliiviöljy");
+        Dincr.deleteIncredient("puolukka");
     }
     @Test
     public void getPortionContentsInListReturnsAList() throws SQLException {
@@ -179,6 +194,34 @@ public class DatabasePortionsTest {
         Dincr.deleteIncredient("puolukka");
     }
     @Test
+    public void getDishContentsArrayListReturnsList() throws SQLException {
+        Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
+        Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
+        Dincr.addIncredient("kevytmaito", 380, 27, 35, 15);
+        Dincr.addIncredient("puolukka", 560, 89, 5, 7);
+        Dport.addPortion("aamupuuro");
+        Dport.addDishContents(1, 1, 100);
+        Dport.addDishContents(1, 2, 10);
+        Dport.addDishContents(1, 3, 150);
+        Dport.addDishContents(1, 4, 50);
+        ArrayList<String> testi = new ArrayList<>();
+        testi.add("annos, ruoka-aine , määrä(g):");
+        testi.add("aamupuuro, kaurahiutale, 100");
+        testi.add("aamupuuro, oliiviöljy, 10");
+        testi.add("aamupuuro, kevytmaito, 150");
+        testi.add("aamupuuro, puolukka, 50");
+        assertEquals(testi, Dport.getDishContentArrayList());
+        Dport.deletePortionPart("aamupuuro", "kaurahiutale");
+        Dport.deletePortionPart("aamupuuro", "oliiviöljy");
+        Dport.deletePortionPart("aamupuuro", "kevytmaito");
+        Dport.deletePortionPart("aamupuuro", "puolukka");
+        Dport.deletePortion("aamupuuro");
+        Dincr.deleteIncredient("kaurahiutale");
+        Dincr.deleteIncredient("oliiviöljy");
+        Dincr.deleteIncredient("kevytmaito");
+        Dincr.deleteIncredient("puolukka");
+    }
+    @Test
     public void databaseCatchesErrorInCaseOneAppears() throws SQLException {
         kanta.dropTables();
         assertFalse(Dport.addPortion("aamupuuro"));
@@ -186,8 +229,8 @@ public class DatabasePortionsTest {
         assertFalse(Dport.addDishContents(1, 1, 100));
         assertFalse(Dport.deletePortionPart("aamupuuro", "kaurahiutale"));
         assertEquals(-1, Dport.getPortionId("aamupuuro"));
-        assertEquals("VIRHE: ei onnistuttu etsimään tauluja.", Dport.getPortionNames());
-        assertEquals("VIRHE: ei onnistuttu etsimään annoksen sisältöä.", Dport.getPortionContentsWithName("aamupuuro"));
+        
+        
         assertEquals("VIRHE: ei onnistuttu hakemaan annostensisältödataa.", Dport.getDishContentToString());
         kanta.createTables();
     }
@@ -198,4 +241,26 @@ public class DatabasePortionsTest {
         assertEquals("Ei onnistuttu luomaan palautettavaa taulua annoksen osista.", outContent.toString());
         kanta.createTables();
     }
+    @Test
+    public void getPortionNamesCatchesError() throws SQLException {
+        kanta.dropTables();
+        Dport.getPortionNames();
+        assertEquals("VIRHE: ei onnistuttu etsimään tauluja.", outContent.toString());
+        kanta.createTables();
+    }
+    @Test
+    public void getPortionWithNameCatchesError() throws SQLException {
+        kanta.dropTables();
+        Dport.getPortionContentsWithName("aamupuuro");
+        assertEquals("VIRHE: ei onnistuttu etsimään annoksen sisältöä.", outContent.toString());
+        kanta.createTables();
+    }
+    @Test
+    public void getDishContentArrayListCatchesError() throws SQLException {
+        kanta.dropTables();
+        Dport.getDishContentArrayList();
+        assertEquals("VIRHE: ei onnistuttu hakemaan annostensisältödataa.", outContent.toString());
+        kanta.createTables();
+    }
+    
 }

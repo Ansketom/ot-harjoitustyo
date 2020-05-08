@@ -9,11 +9,16 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import static javafx.scene.paint.Color.*;
+import javafx.scene.text.Text;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.*;
 import javafx.application.Application;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import ruokasovellus.Database;
 import ruokasovellus.DatabaseIncredients;
@@ -38,6 +43,11 @@ public class DesktopUI extends Application {
     private DatabaseDiary dDiary;
     private DiaryFunctions diary;
     private TableView table = new TableView();
+    
+    private ObservableList<String> diaryList = FXCollections.observableArrayList();
+    private ObservableList<String> dMealList = FXCollections.observableArrayList();
+    private ObservableList<String> pMealList = FXCollections.observableArrayList();
+    private ObservableList<String> incrList = FXCollections.observableArrayList();
  
     
     
@@ -60,6 +70,9 @@ public class DesktopUI extends Application {
         pageSwitcher.getChildren().addAll(first, second, third);
         pageSwitcher.setPadding(new Insets(5, 20, 20, 20));
         pageSwitcher.setSpacing(10);
+        first.setStyle("-fx-background-color: LIGHTSALMON;");
+        second.setStyle("-fx-background-color: LIGHTGRAY;");
+        third.setStyle("-fx-background-color: LIGHTGRAY;");
         
         
         // Ruoka-ainesivu
@@ -67,7 +80,7 @@ public class DesktopUI extends Application {
         VBox incredientFields = new VBox();
         VBox incredientLabels = new VBox();
         HBox incredientManager = new HBox();
-        Label incredientsList = new Label("");
+        //Label incredientsList = new Label("");
         VBox incredientPage = new VBox();
         
         incredientButtons.setPadding(new Insets(5, 10, 5, 10));
@@ -75,7 +88,7 @@ public class DesktopUI extends Application {
         incredientLabels.setPadding(new Insets(5, 10, 5, 10));
         incredientLabels.setSpacing(8);
         incredientLabels.setAlignment(Pos.TOP_RIGHT);
-        incredientsList.setPrefSize(400, 400);
+        
         
         Button addIncr = new Button("Lisää");
         Button deleteIncr = new Button("Poista");
@@ -94,19 +107,28 @@ public class DesktopUI extends Application {
         Label incrprot = new Label("Proteiini/100g:");
         Label incrfat = new Label("Rasva/100g:");
         
-        Label incredientsPageErrorMessage = new Label("Message: ");
+        Label incredientsPageErrorMessage = new Label("");
+        incredientsPageErrorMessage.setTextFill(RED);
+        ListView<String> dIncrList = new ListView<>(incrList);
+        dIncrList.prefHeight(400);
+        dIncrList.prefWidth(400);
+        dIncrList.setPadding(new Insets(5, 10, 5, 10));
+        
+        incrList.addAll(dIncredients.listIncredientsArrayList());
+        
+        
         
         //ruoka-ainesivun toiminnallisuus
         
         //ruoka-ainelistauksen päivitys
-        //Label listIncredients = new Label ("");
-        incredientsList.setText("");
+        
         refreshIncredientsList.setOnAction((ActionEvent e)-> {
-            //String incredientsInList = kanta.listIncredientsToString();
-            incredientsList.setText(dIncredients.listIncredientsToString());
+            incrList.clear();
+            incrList.addAll(dIncredients.listIncredientsArrayList());
         });
         //ruoka-aineen lisäys
         addIncr.setOnAction((ActionEvent e)-> {
+            incredientsPageErrorMessage.setText("");
 
             String incredName = incredientInput.getText();
             String energy = kcalInput.getText();
@@ -114,14 +136,34 @@ public class DesktopUI extends Application {
             String protein = protInput.getText();
             String fats = fatInput.getText();
 
-            int ene = Integer.valueOf(energy.replaceAll("\\D+", ""));
-            int ch = Integer.valueOf(carbohyd.replaceAll("\\D+", ""));
-            int prot = Integer.valueOf(protein.replaceAll("\\D+", ""));
-            int fat = Integer.valueOf(fats.replaceAll("\\D+", ""));
+            energy = energy.replaceAll("\\D+", "");
+            carbohyd = carbohyd.replaceAll("\\D+", "");
+            protein = protein.replaceAll("\\D+", "");
+            fats = fats.replaceAll("\\D+", "");
+            
+            if (energy.equals("")) {
+                energy = "0";
+            }
+            if (carbohyd.equals("")) {
+                carbohyd = "0";
+            }
+            if (protein.equals("")) {
+                protein = "0";
+            }
+            if (fats.equals("")) {
+                fats = "0";
+            }
+            
+            int ene = Integer.valueOf(energy);
+            int ch = Integer.valueOf(carbohyd);
+            int prot = Integer.valueOf(protein);
+            int fat = Integer.valueOf(fats);
+            
 
             boolean iadd = dIncredients.addIncredient(incredName, ene, ch, prot, fat);
             incredientsPageErrorMessage.setText("lisäys onnistui: " + iadd);
-            incredientsList.setText(dIncredients.listIncredientsToString());
+            incrList.clear();
+            incrList.addAll(dIncredients.listIncredientsArrayList());
             
         });
         //Ruoka-aineen nollaus
@@ -129,7 +171,9 @@ public class DesktopUI extends Application {
             incredientsPageErrorMessage.setText("Nollataksesi ruoka-aineen jota ei enää ole sidottu annokseen, syötä Kcal -riville arvo: -1");
             if (kcalInput.getText().equals("-1")) {
                 dIncredients.deleteIncredient(incredientInput.getText());
-                incredientsList.setText(dIncredients.listIncredientsToString());
+                incrList.clear();
+                incrList.addAll(dIncredients.listIncredientsArrayList());
+                incredientsPageErrorMessage.setText("");
             }
         });
         
@@ -139,7 +183,7 @@ public class DesktopUI extends Application {
         
                 
         incredientManager.getChildren().addAll(incredientLabels, incredientFields, incredientButtons);
-        incredientPage.getChildren().addAll(incredientManager, incredientsPageErrorMessage, incredientsList);
+        incredientPage.getChildren().addAll(incredientManager, incredientsPageErrorMessage, dIncrList);
         
         
         layout.setBottom(pageSwitcher);
@@ -155,10 +199,12 @@ public class DesktopUI extends Application {
         
         mealButtons.setPadding(new Insets(17, 10, 5, 10));
         mealButtons.setSpacing(2);
-        mealInput.setPadding(new Insets(5, 10, 5, 10));
+        mealInput.setPadding(new Insets(5, 10, 5, 0));
         mealInput.setSpacing(2);
-        mealManager.setPadding(new Insets(5, 10, 5, 10));
+        mealManager.setPadding(new Insets(5, 10, 5, 0));
         mealList.setPrefSize(400, 600);
+        searchOptions.setPadding(new Insets(5, 10, 5, 0));
+        mealManagePage.setPadding(new Insets(5, 10, 5, 10));
         
         //Control elements
         Label mealNameLabel = new Label("Ruoka-annoksen nimi:");
@@ -170,7 +216,7 @@ public class DesktopUI extends Application {
         
         
         Button addMeal = new Button("Lisää uusi ruoka-annos (nimikenttä)");
-        Button addIncrToMeal = new Button("Lisää ruoka-aine annokseen(aine, määrä)");
+        Button addIncrToMeal = new Button("Lisää ruoka-aine annokseen(nimi, aine, määrä)");
         Button deleteFromMeal = new Button("Poista ruoka-aine annoksesta(nimi, aine)");
         
         
@@ -180,46 +226,72 @@ public class DesktopUI extends Application {
         
         Button bringIncredientsList = new Button("Ruoka-aineluettelo");
         Label mealPageErrorMessage = new Label("");
+        mealPageErrorMessage.setTextFill(RED);
+        
+        ListView<String> portionList = new ListView<>(pMealList);
+        pMealList.addAll(dPortions.getDishContentArrayList());
+        
         //Actions
         addMeal.setOnAction((ActionEvent e) -> {
             dPortions.addPortion(mealNameInput.getText());
         });
-        addIncrToMeal.setOnAction((ActionEvent e) -> {
-            String portName = mealNameInput.getText();
-            int portNameInt = dPortions.getPortionId(portName);
-            String portIncrName = mealPartField.getText();
-            int portIncrNameInt = dIncredients.getIncredientId(portIncrName);
-            int portAmount = Integer.valueOf(mealPartAmountField.getText());
-            dPortions.addDishContents(portNameInt, portIncrNameInt, portAmount);
+        addIncrToMeal.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mealPageErrorMessage.setText("");
+                try {
+                    String portName = mealNameInput.getText();
+                    int portNameInt = dPortions.getPortionId(portName);
+                    String portIncrName = mealPartField.getText();
+                    int portIncrNameInt = dIncredients.getIncredientId(portIncrName);
+                    int portAmount = Integer.valueOf(mealPartAmountField.getText());
+                    dPortions.addDishContents(portNameInt, portIncrNameInt, portAmount);
+                } catch (NumberFormatException n) {
+                    mealPageErrorMessage.setText("Ruoan lisäys ateriaan epäonnistui: tarkista kaikki kentät!");
+                }
+            }
         });
-        deleteFromMeal.setOnAction((ActionEvent e) -> {
-            dPortions.deletePortionPart(mealNameInput.getText(), mealPartField.getText());
-            mealList.setText(dIncredients.listIncredientsToString());
+        deleteFromMeal.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mealPageErrorMessage.setText("");
+                try {
+                    dPortions.deletePortionPart(mealNameInput.getText(), mealPartField.getText());
+                    mealList.setText(dIncredients.listIncredientsToString());
+                } catch (NumberFormatException n) {
+                    mealPageErrorMessage.setText("Ruoka-aineen poisto ateriasta epäonnistui: tarkista kentät 'ruoka-annoksen nimi' ja 'ruoka-aine'!");
+                    
+                }
+            }
         });
         listAllMeals.setOnAction((ActionEvent e) -> {
-            mealList.setText(dPortions.getDishContentToString());
+            pMealList.clear();
+            pMealList.addAll(dPortions.getDishContentArrayList());
         });
         listMealNames.setOnAction((ActionEvent e) -> {
-            mealList.setText(dPortions.getPortionNames());
+            pMealList.clear();
+            pMealList.addAll(dPortions.getPortionNames());
         });
         listMealContents.setOnAction((ActionEvent e) -> {
-            String mealsList = dPortions.getPortionContentsWithName(mealNameInput.getText());
-            mealList.setText(mealsList);
+            pMealList.clear();
+            pMealList.addAll(dPortions.getPortionContentsWithName(mealNameInput.getText()));
+            
         });
         bringIncredientsList.setOnAction((ActionEvent e)-> {
-            mealList.setText(dIncredients.listIncredientsToString());
+            pMealList.clear();
+            pMealList.addAll(dIncredients.listIncredientsArrayList());
         });
         
         mealInput.getChildren().addAll(mealNameLabel, mealNameInput, mealPartLabel, mealPartField, mealPartAmountLabel, mealPartAmountField);
         mealButtons.getChildren().addAll(addMeal, addIncrToMeal, deleteFromMeal);
         mealManager.getChildren().addAll(mealInput, mealButtons);
         searchOptions.getChildren().addAll(listAllMeals, listMealNames, listMealContents);
-        mealManagePage.getChildren().addAll(mealManager, bringIncredientsList, mealPageErrorMessage, searchOptions, mealList);
+        mealManagePage.getChildren().addAll(mealManager, bringIncredientsList, mealPageErrorMessage, searchOptions, portionList);
         
         // Päiväkirjasivu
         VBox diaryButtons = new VBox();
-        VBox diaryLabels = new VBox();
-        VBox diaryFields = new VBox();
+        VBox diaryLabelsFields = new VBox();
+        //VBox diaryFields = new VBox();
         HBox waterManager = new HBox();
         HBox diaryDatabaseButtons = new HBox();
         HBox diaryManager = new HBox();
@@ -229,14 +301,16 @@ public class DesktopUI extends Application {
         
         diaryButtons.setPadding(new Insets(5, 10, 5, 10));
         diaryButtons.setSpacing(2);
-        diaryLabels.setPadding(new Insets(5, 10, 5, 10));
-        diaryLabels.setAlignment(Pos.TOP_RIGHT);
-        diaryFields.setPadding(new Insets(5, 10, 5, 10));
+        diaryLabelsFields.setPadding(new Insets(5, 10, 5, 10));
+        diaryLabelsFields.setAlignment(Pos.TOP_LEFT);
+        //diaryFields.setPadding(new Insets(5, 10, 5, 10));
         waterManager.setPadding(new Insets(5, 10, 5, 10));
+        diaryDatabaseButtons.setPadding(new Insets(0, 0, 5, 10));
+        waterManager.setSpacing(2);
         
         Label portionLabel = new Label("Ruoka-annos:");
         Label dayLabel = new Label("Päivämäärä:");
-        diaryLabels.setSpacing(8);
+        //diaryLabelsFields.setSpacing(8);
         
         TextField diaryInput = new TextField();
         TextField dayInput = new TextField();
@@ -252,64 +326,108 @@ public class DesktopUI extends Application {
         Label waterUnit = new Label("desilitraa");
         TextField waterAmount = new TextField();
         
-        Label portionsInData = new Label(dPortions.getPortionNames());
+        //Label portionsInData = new Label(dPortions.getPortionNames());
         
         Button showDiaryData = new Button("Update data");
         
-        Label diaryData = new Label();
+        ListView<String> diaryL = new ListView<>(diaryList);
+        diaryList.clear();
+        diaryList.addAll(dDiary.getDiaryData());
+        
+        ListView<String> diaryM = new ListView<>(dMealList);
+        dMealList.clear();
+        dMealList.addAll(dPortions.getPortionNames());
+        
+        
+        
+        Label diaryErrorMessage = new Label ("");
+        diaryErrorMessage.setPadding(new Insets(0, 0, 5, 10));
+        diaryErrorMessage.setTextFill(RED);
+        
         
         getDate.setOnAction((ActionEvent e)-> {
             dayInput.setText(diary.getDate());
         });
         formatMealList.setOnAction((ActionEvent e)-> {
             diary.addDate(dayInput.getText());
-            diaryData.setText(diary.diaryToString());
+            diaryList.clear();
+            diaryList.addAll(dDiary.getDiaryData());
+            
         });
         sumAMeal.setOnAction((ActionEvent e)-> {
             diary.addMeal(dayInput.getText(), diaryInput.getText());
-            diaryData.setText(diary.diaryToString());
+            diaryList.clear();
+            diaryList.addAll(dDiary.getDiaryData());
         });
         substractAMeal.setOnAction((ActionEvent e)-> {
             diary.substractMeal(dayInput.getText(), diaryInput.getText());
-            diaryData.setText(diary.diaryToString());
+            diaryList.clear();
+            diaryList.addAll(dDiary.getDiaryData());
+            diaryErrorMessage.setText("");
         });
         showDiaryData.setOnAction((ActionEvent e)-> {
-            diaryData.setText(diary.diaryToString());
+            diaryList.clear();
+            diaryList.addAll(dDiary.getDiaryData());
+            diaryErrorMessage.setText("");
         });
         getWaterAmount.setOnAction((ActionEvent e)-> {
             int waterA = diary.getWater(dayInput.getText());
             waterAmount.setText(String.valueOf(waterA));
+            diaryErrorMessage.setText("");
         });
         exportWater.setOnAction((ActionEvent e)-> {
-            int wAmount = Integer.valueOf(waterAmount.getText());
-            diary.updateWater(dayInput.getText(), wAmount);
-            diaryData.setText(diary.diaryToString());
+            String wAmount = waterAmount.getText().replaceAll("\\D+", "");
+            if (wAmount.equals("")){
+                diaryErrorMessage.setText("Ei lisättävää vesimäärää");
+            } else {
+                int wAmo = Integer.valueOf(wAmount);
+                diary.updateWater(dayInput.getText(), wAmo);
+                diaryList.clear();
+                diaryList.addAll(dDiary.getDiaryData());
+                diaryErrorMessage.setText("");
+            }
         });
         
-        diaryLabels.getChildren().addAll(portionLabel, dayLabel);
-        diaryFields.getChildren().addAll(diaryInput, dayInput);
+        diaryLabelsFields.getChildren().addAll(portionLabel,diaryInput, dayLabel, dayInput);
+        //diaryFields.getChildren().addAll(diaryInput, dayInput);
         diaryButtons.getChildren().addAll(getDate, formatMealList, sumAMeal, substractAMeal);
         diaryDatabaseButtons.getChildren().addAll(showDiaryData);
         waterManager.getChildren().addAll(getWaterAmount, waterAmount, waterUnit, exportWater);
         
-        diaryManager.getChildren().addAll(diaryLabels, diaryFields, diaryButtons, portionsInData);
-        diaryPage.getChildren().addAll(diaryManager, waterManager, diaryDatabaseButtons, diaryData);
+        diaryManager.getChildren().addAll(diaryLabelsFields, diaryButtons, diaryM);
+        diaryPage.getChildren().addAll(diaryManager, waterManager, diaryErrorMessage, diaryDatabaseButtons, diaryL);
         // Setup primary stage
         first.setOnAction((event)-> {
             layout.setCenter(incredientPage);
-            incredientsList.setText(dIncredients.listIncredientsToString());
+            first.setStyle("-fx-background-color: LIGHTSALMON");
+            second.setStyle("-fx-background-color: LIGHTGRAY");
+            third.setStyle("-fx-background-color: LIGHTGRAY");
+            incrList.clear();
+            incrList.addAll(dIncredients.listIncredientsArrayList());
         });
-        second.setOnAction((event)-> layout.setCenter(mealManagePage));
+        second.setOnAction((event)-> {
+            layout.setCenter(mealManagePage);
+            first.setStyle("-fx-background-color: LIGHTGRAY");
+            second.setStyle("-fx-background-color: LIGHTSALMON;");
+            third.setStyle("-fx-background-color: LIGHTGRAY");
+        });
         third.setOnAction((event)-> { 
             layout.setCenter(diaryPage);
-            portionsInData.setText(dPortions.getPortionNames());
+            //portionsInData.setText(dPortions.getPortionNames());
+            dMealList.clear();
+            dMealList.addAll(dPortions.getPortionNames());
+            diaryList.clear();
+            diaryList.addAll(dDiary.getDiaryData());
+            first.setStyle("-fx-background-color: LIGHTGRAY");
+            second.setStyle("-fx-background-color: LIGHTGRAY");
+            third.setStyle("-fx-background-color: LIGHTSALMON;");
         });
         
         layout.setCenter(incredientPage);
         
         Scene view = new Scene(layout);
         window.setTitle("Ruokaohjelma");
-        window.setWidth(550);
+        window.setWidth(600);
         window.setHeight(600);
         window.setScene(view);
         window.show();
@@ -317,7 +435,7 @@ public class DesktopUI extends Application {
     }
     private StackPane createLayout(String text) {
         StackPane layout = new StackPane();
-        layout.setPrefSize(800, 800);
+        layout.setPrefSize(800, 1000);
         layout.getChildren().add(new Label(text));
         layout.setAlignment(Pos.CENTER);
         
