@@ -8,11 +8,10 @@ Näillä luokilla on metodien oletuksenmukaisen toiminnan testaavat yksikkötest
  jotka testaavat metodit samaan tapaan kuin itse ohjelma niitä käyttää.
  
 ### Testauskattavuus
- Käyttöliittymää (DesktopUI- ja Main-luokkaa) varten ei ole testejä. Muuten testauksella on 100% rivikattavuus ja 88% 
-![testikattavuus](Dokumentointi/kuvat/ruokasovellus_testikattavuus.PNG)  
- 
- Testikattavuus ei ole täysi, koska niiden koodaajalla loppui taidot kesken.
+ Käyttöliittymää (DesktopUI- ja Main-luokkaa) varten ei ole testejä. Muuten testauksella on 100% rivikattavuus ja 88%   
  <img src="https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/ruokasovellus_testikattavuus.PNG?raw=true" width="800">
+ 
+ Testikattavuus ei ole täysi, koska testien koodaajalla loppui taidot kesken.
  
 ## Järjestelmätestaus
  Järjestelmätestaus suoritettiin manuaalisesti.
