@@ -27,6 +27,6 @@ Annoksia muodostaessa on hyvä käyttää apuna tarvitsemiaan tai mieleisiään 
 ### Näkymä 3 - Päiväkirja
 Näkymässä 3 käyttäjä voi laskea, kuinka paljon energiaa ja makroravinteita hänen aterioissaan on. 
 Tätä varten on ensin alustettava lasku jollekin merkkijonolle, esimerkiksi päivämäärä. Tämän päivän päivämäärän saa sopivassa muodossa päivämääräkenttään suoraan napista, ja sitten alustamalla laskun tämä muodostaa uuden rivin tietokantaan.
-Laskeminen tapahtuu lisäämällä tai vähentämällä annoksia päiväkirjariville. Sivulla on mahdollisuus myös tallentaa juotu vesimäärä päiväkirjaan, sekä nollata rivin laskut.
+Laskeminen tapahtuu lisäämällä tai vähentämällä annoksia päiväkirjariville. Sivulla on mahdollisuus myös tallentaa juotu vesimäärä päiväkirjaan, sekä nollata rivin laskut.    
 Näkymä 3 on hieman nurinkurisesti ohjelman avausnäkymä. Syy tälle on se, että jos syöt usein samoja ruokia, niin kohtahan ne ovat valmiina aterioina tietokannassa. Sitten ei usein muita sivuja tarvitsekaan.
 <img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/RuokasovellusN4.PNG?raw=true" width="400">
