@@ -20,7 +20,7 @@ Poistettaessa ruoka-aineita, olisi suotavaa poistaa niiden yhteydet aterioista.
 ### Näkymä 2 - Ruoka-annosten hallinta
 Näkymässä 2 käyttäjä voi muodostaa näkymässä 1 lisäämistään ruoka-aineista aterioita. 
 Tämä tapahtuu siten, että ensin luodaan ruoka-annos tietokantaan, ja sitten siihen lisätään haluttuja määriä tietokannassa jo olevia ruoka-aineita.  
-Annoksia muodostaessa on hyvä käyttää apuna tarvitsemiaan tai mieleisiään listauksia lisätyistä ruoka-aineista ja annosten sisällöistä.
+Annoksia muodostaessa on hyvä käyttää apuna tarvitsemiaan tai mieleisiään listauksia lisätyistä ruoka-aineista ja annosten sisällöistä.    
 <img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/RuokasovellusN2.PNG?raw=true" width="400">  
 <img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/RuokasovellusN3.PNG?raw=true" width="400">     
 
