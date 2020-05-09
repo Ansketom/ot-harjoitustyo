@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ruokasovellus;
 
 import java.sql.Connection;
@@ -27,13 +23,7 @@ public class DatabaseDiary {
         this.db = kanta.db;
         this.dPortions = dport;
     }
-    /**
-     * Metodi sulkee ohjelman yhteyden tietokantaan.
-     * @throws java.sql.SQLException
-     */
-    public void closeConnection() throws SQLException {
-        db.close();
-    }
+    
     /**
     * Metodi avaa ohjelmalle yhteyden tietokantaan.
      * @throws java.sql.SQLException
@@ -41,7 +31,15 @@ public class DatabaseDiary {
     public void openConnection() throws SQLException {
         db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
     }
-
+    
+    /**
+     * Metodi sulkee ohjelman yhteyden tietokantaan.
+     * @throws java.sql.SQLException
+     */
+    public void closeConnection() throws SQLException {
+        db.close();
+    }
+    
     /**
      * Metodi lisää tietokannan päiväkirja-tauluun halutun päivämäärän, ja määrittää taulun
      * kaikkien muiden sarakkeiden kohdalle arvon nolla.
@@ -68,27 +66,26 @@ public class DatabaseDiary {
             return false;
         }
     }
-
+    
     /**
-     * Metodi palauttaa int-lukuarvona tietokannan päiväkirja -taulusta päivän kohdalle
-     * merkityn juodun vesimäärän.
+     * Metodi poistaa tietokannan päiväkirjataulusta annetun päivämäärän, ja siihen liitetyt
+     * tiedot (tätä metodia tarvitaan testauksessa).
      *
      * @param date Käyttäjän antama päivämäärä
      *
-     * @return water-sarakkeeseen merkitty integer vesimäärä desilitroissa
+     * @return totuusarvo siitä onnistuivatko metodin tietokantatoiminnot
      */
-    public int getDiaryWater(String date) {
+    public boolean deleteDateFromDiary(String date) {
         try {
             this.openConnection();
-            PreparedStatement p = this.db.prepareStatement("SELECT water FROM diary WHERE date  = ?");
+            PreparedStatement p = this.db.prepareStatement("DELETE FROM Diary WHERE date=?");
             p.setString(1, date);
-            ResultSet r = p.executeQuery();
-            int w = r.getInt("water");
+            p.executeUpdate();
             this.closeConnection();
-            return w;
+            return true;
         } catch (SQLException e) {
-            System.out.println("Ei saatu luettua vesimäärää päiväkirjasta.");
-            return -1;
+            System.out.println("Päivämäärän poistaminen epäonnistui.");
+            return false;
         }
     }
 
@@ -123,30 +120,6 @@ public class DatabaseDiary {
     }
 
     /**
-     * Metodi päivittää tietokannan päiväkirja-tauluun käyttäjän antaman päivämäärän
-     * riville juodun veden määrän.
-     *
-     * @param date Käyttäjän antama päivämäärä
-     * @param water tietokantaan päivitettävä uusi päivän vesimäärä, desilitraa.
-     *
-     * @return totuusarvo siitä onnistuivatko metodin tietokantatoiminnot
-     */
-    public boolean updateDiaryWater(String date, int water) {
-        try {
-            this.openConnection();
-            PreparedStatement p = this.db.prepareStatement("UPDATE Diary SET water = ? WHERE date  = ?");
-            p.setInt(1, water);
-            p.setString(2, date);
-            p.executeUpdate();
-            this.closeConnection();
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Päiväkirjamerkinnän veden päivitys epäonnistui.");
-            return false;
-        }
-    }
-
-    /**
      * Metodi palauttaa koko päiväkirjataulun sisällön ArrayListina riveittäin
      * stringiksi muutettuna.
      *
@@ -167,7 +140,7 @@ public class DatabaseDiary {
         }
         return diaryData;
     }
-
+    
     /**
      * Metodi palauttaa parametrina annetun päivämäärän kohdalla tietokannan päiväkirja-
      * taulussa olevat numeroarvotiedot int [] -listana.
@@ -194,27 +167,54 @@ public class DatabaseDiary {
             return data;
         }
     }
-
+    
     /**
-     * Metodi poistaa tietokannan päiväkirjataulusta annetun päivämäärän, ja siihen liitetyt
-     * tiedot (tätä metodia tarvitaan testauksessa).
+     * Metodi päivittää tietokannan päiväkirja-tauluun käyttäjän antaman päivämäärän
+     * riville juodun veden määrän.
      *
      * @param date Käyttäjän antama päivämäärä
+     * @param water tietokantaan päivitettävä uusi päivän vesimäärä, desilitraa.
      *
      * @return totuusarvo siitä onnistuivatko metodin tietokantatoiminnot
      */
-    public boolean deleteDateFromDiary(String date) {
+    public boolean updateDiaryWater(String date, int water) {
         try {
             this.openConnection();
-            PreparedStatement p = this.db.prepareStatement("DELETE FROM Diary WHERE date=?");
-            p.setString(1, date);
+            PreparedStatement p = this.db.prepareStatement("UPDATE Diary SET water = ? WHERE date  = ?");
+            p.setInt(1, water);
+            p.setString(2, date);
             p.executeUpdate();
             this.closeConnection();
             return true;
         } catch (SQLException e) {
-            System.out.println("Päivämäärän poistaminen epäonnistui.");
+            System.out.println("Päiväkirjamerkinnän veden päivitys epäonnistui.");
             return false;
         }
     }
+    
+    /**
+     * Metodi palauttaa int-lukuarvona tietokannan päiväkirja -taulusta päivän kohdalle
+     * merkityn juodun vesimäärän.
+     *
+     * @param date Käyttäjän antama päivämäärä
+     *
+     * @return water-sarakkeeseen merkitty integer vesimäärä desilitroissa
+     */
+    public int getDiaryWater(String date) {
+        try {
+            this.openConnection();
+            PreparedStatement p = this.db.prepareStatement("SELECT water FROM diary WHERE date  = ?");
+            p.setString(1, date);
+            ResultSet r = p.executeQuery();
+            int w = r.getInt("water");
+            this.closeConnection();
+            return w;
+        } catch (SQLException e) {
+            System.out.println("Ei saatu luettua vesimäärää päiväkirjasta.");
+            return -1;
+        }
+    }
+
+    
     
 }

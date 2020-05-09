@@ -1,24 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-import java.sql.Connection;
-import java.sql.SQLException;
-import ruokasovellus.DiaryFunctions;
-import ruokasovellus.DatabaseIncredients;
-import ruokasovellus.DatabasePortions;
-import ruokasovellus.DatabaseDiary;
-import ruokasovellus.Database;
+package ruokasovellus;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Assert;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -46,14 +33,6 @@ public class DiaryFunctionsTest {
         date = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() throws SQLException {
         kanta.createTables();
@@ -63,12 +42,6 @@ public class DiaryFunctionsTest {
     public void tearDown() {
         kanta.dropTables();
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 
     @Test
     public void getDateGivesTodaysDate() {
@@ -135,15 +108,5 @@ public class DiaryFunctionsTest {
         assertEquals(20, diary.getWater("04.05.2020"));
         Ddiar.deleteDateFromDiary("04.05.2020");
         }
-    @Test
-    public void diaryToStringWorksCorrectly() {
-        Ddiar.addDateToDiary("05.05.2020");
-        Ddiar.addDateToDiary("06.05.2020");
-        Ddiar.updateDiary("05.05.2020", 20100, 1800, 1200, 900);
-        Ddiar.updateDiary("06.05.2020", 20900, 2000, 1200, 900);
-        assertEquals("05.05.2020: Kcal: 2010.0, hiilihyd.: 180.0g, proteiini: 120.0g, rasva: 90.0g, vesi: 0.0litraa\n06.05.2020: Kcal: 2090.0, hiilihyd.: 200.0g, proteiini: 120.0g, rasva: 90.0g, vesi: 0.0litraa\n", diary.diaryToString());
-        Ddiar.deleteDateFromDiary("05.05.2020");
-        Ddiar.deleteDateFromDiary("05.05.2020");
-    }
-    
+   
 }

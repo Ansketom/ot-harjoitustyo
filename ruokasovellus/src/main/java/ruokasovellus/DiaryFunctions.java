@@ -24,15 +24,7 @@ public class DiaryFunctions {
         this.dPortions = dP;
         this.dDiary = dD;
     }
-    /**
-    * Metodi palauttaa tämän päivän päivämäärän merkkijonona.
-    * 
-    * @return String jossa tämän päivän päivämäärä muodossa dd.MM.yyyy
-    */
-    public final String getDate() {
-        LocalDate now = LocalDate.now();
-        return date.format(now);
-    }
+    
     /**
     * Metodi käyttää Database -luokan metodia, joka lisää tietokannan päiväkirjatauluun
     * päivämäärän ja alustaa rivin muut arvot nolliksi.
@@ -43,6 +35,15 @@ public class DiaryFunctions {
     */
     public boolean addDate(String dayValue) {
         return dDiary.addDateToDiary(dayValue);
+    }
+    /**
+    * Metodi palauttaa tämän päivän päivämäärän merkkijonona.
+    * 
+    * @return String jossa tämän päivän päivämäärä muodossa dd.MM.yyyy
+    */
+    public final String getDate() {
+        LocalDate now = LocalDate.now();
+        return date.format(now);
     }
     /**
     * Metodi suorittaa yhteenlaskun päiväkirjatauluun päivämäärän kohdalle merkityistä
@@ -105,17 +106,6 @@ public class DiaryFunctions {
         return dDiary.updateDiary(dayValue, kcal, ch, prot, fat);
     }
     /**
-    * Metodi hakee päivämäärän kohdalle merkityn vesimäärän 
-    * tietokannan päiväkirjataulusta tietokantaa käyttävän luokan metodin avulla.
-    * 
-    * @param dayValue päivämäärä dd.MM.yyyy
-    * 
-    * @return päivämäärän kohdalla päiväkirjataulussa ollut vesimäärä desilitroina
-    */
-    public int getWater(String dayValue) {
-        return dDiary.getDiaryWater(dayValue);
-    }
-    /**
     * Metodi käyttää tietokantaa käyttävän luokan metodeita hakeakseen päivämäärän
     * kohdalle merkityn vesimäärän, summaa siihen halutun vesimäärän, ja jos tulos
     * on positiivinen niin päivittää sen tietokannan päiväkirjatauluun.
@@ -133,6 +123,18 @@ public class DiaryFunctions {
         return this.updateWater(dayValue, waterAmount);
     }
     /**
+    * Metodi hakee päivämäärän kohdalle merkityn vesimäärän 
+    * tietokannan päiväkirjataulusta tietokantaa käyttävän luokan metodin avulla.
+    * 
+    * @param dayValue päivämäärä dd.MM.yyyy
+    * 
+    * @return päivämäärän kohdalla päiväkirjataulussa ollut vesimäärä desilitroina
+    */
+    public int getWater(String dayValue) {
+        return dDiary.getDiaryWater(dayValue);
+    }
+    
+    /**
     * Metodi käyttää tietokantaa käyttävän luokan metodia päivittääkseen parametrina
     * annetun vesimäärän parametrina annetun päivämäärän kohdalle tietokannan
     * päiväkirjatauluun.
@@ -144,20 +146,6 @@ public class DiaryFunctions {
     */
     public boolean updateWater(String dayValue, int waterAmount) {
         return dDiary.updateDiaryWater(dayValue, waterAmount);
-    }
-    /**
-    * Metodi käyttää tietokantaa käyttävän luokan metodia hakeakseen päiväkirjan sisällön
-    * ArrayListina, ja sitten muuttaa sen rivitetyksi merkkijonoksi.
-    * 
-    * @return merkkijono, jossa on koko päiväkirjan sisältö rivitettynä
-    */
-    public String diaryToString() {
-        ArrayList<String> diaryData = dDiary.getDiaryData();
-        String dataString = "";
-        for (String row : diaryData) {
-            dataString += row + "\n";
-        }
-        return dataString;
     }
     
 }

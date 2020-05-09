@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ruokasovellus;
 
 import java.sql.*;
@@ -26,21 +22,23 @@ public class DatabaseIncredients {
         this.db = kanta.db;
         
     }
-    /**
-    * Metodi sulkee ohjelman yhteyden tietokantaan.
-     * @throws java.sql.SQLException
-    */
-    public void closeConnection() throws SQLException {
-        db.close();
-    }
+    
     /**
     * Metodi avaa ohjelmalle yhteyden tietokantaan.
-     * @throws java.sql.SQLException
+    * @throws java.sql.SQLException
     */
     public void openConnection() throws SQLException {
         db = DriverManager.getConnection("jdbc:sqlite:ruokasovellus.db");
     }
-
+    
+    /**
+    * Metodi sulkee ohjelman yhteyden tietokantaan.
+    * @throws java.sql.SQLException
+    */
+    public void closeConnection() throws SQLException {
+        db.close();
+    }
+    
     /**
     * Metodi lisää tietokannan ruoka-aine -tauluun ruoka-aineen.
     * 
@@ -70,6 +68,7 @@ public class DatabaseIncredients {
             return false;
         }
     }
+    
     /**
     * Metodi poistaa tietokannasta annetunnimisen ruoka-aineen.
     * 
@@ -91,33 +90,14 @@ public class DatabaseIncredients {
         }
         return true;
     }
+    
     /**
-    * Metodi listaa tietokantaan lisätyt ruoka-aineet Stringiksi riveittäin
+    * Metodi listaa tietokantaan lisätyt ruoka-aineet ArrayListiksi 
     * otsikkorivin ja seliterivin alle.
     *  
-    * @return String, jossa otsikkorivin ja seliterivin alla tietokantaan lisätyt ruoka-
+    * @return ArrayList, jossa otsikkorivin ja seliterivin alla tietokantaan lisätyt ruoka-
     * aineet riveittäin tietoineen
     */
-    public String listIncredientsToString() {
-        String list = "Ruoka-aineslista \n(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)";
-        try {
-            this.openConnection();
-            PreparedStatement p = db.prepareStatement("SELECT name, kcal, ch, prot, fat FROM Incredients i GROUP BY name");
-            ResultSet r = p.executeQuery();
-            
-            while (r.next()) {
-                double kcal = r.getInt("kcal");
-                double hh = r.getInt("ch");
-                double protein = r.getInt("prot");
-                double rasva = r.getInt("fat");
-                list = list + "\n" + r.getString("name") + ": " + kcal / 10 + "(kcal), h:" + hh / 10 + ", p:" + protein / 10 + ", r:" + rasva / 10;
-            }
-            this.closeConnection();
-            return list;    
-        } catch (SQLException e) {
-            return "VIRHE: Ruoka-aineiden listaaminen epäonnistui.";
-        }
-    }
     public ArrayList<String> listIncredientsArrayList() {
         ArrayList<String> data = new ArrayList<>();
         data.add("Ruoka-aineslista");
@@ -128,14 +108,9 @@ public class DatabaseIncredients {
             ResultSet r = p.executeQuery();
             
             while (r.next()) {
-                double kcal = r.getInt("kcal");
-                double hh = r.getInt("ch");
-                double protein = r.getInt("prot");
-                double rasva = r.getInt("fat");
-                data.add(r.getString("name") + ": " + kcal / 10 + "(kcal), h:" + hh / 10 + ", p:" + protein / 10 + ", r:" + rasva / 10);
+                data.add(r.getString("name") + ": " + r.getInt("kcal") * 1.0 / 10 + "(kcal), h:" + r.getInt("ch") * 1.0 / 10 + ", p:" + r.getInt("prot") * 1.0 / 10 + ", r:" + r.getInt("fat") * 1.0 / 10);
             }
             this.closeConnection();
-                
         } catch (SQLException e) {
             System.out.print("VIRHE: Ruoka-aineiden listaaminen epäonnistui.");
         }
@@ -166,7 +141,7 @@ public class DatabaseIncredients {
 
     /**
      * Metodi palauttaa parametrina annetun ruoka-aineen integer -lukuarvoiset tiedot
-     * int -listana.
+     * int -listana (tarvitaan päiväkirjan aterialaskennassa).
      *
      * @param name Käyttäjän antama ruoka-aineen nimi
      *

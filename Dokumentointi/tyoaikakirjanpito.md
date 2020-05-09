@@ -36,7 +36,12 @@ Päivä | aika(h) | Mitä tein
 6.5|4|Javadoc käyttöönotto ja merkintöjen teko koko database-luokkaan. Piti tässäkin muutta pom:ia että lähti toimimaan.
 7.5|3|Yli 500 rivin Database -luokan jako neljään tietokantatoimintoja tekevään luokkaan: tietokantatoiminnot, ruoka-aineet, ruoka-annokset, päiväkirja.
 7.5|3|Testien refaktorointi uudelle luokkajaolle. Javadoc merkintöjen parannus yms korjailut.
+8.5|4|Desktop-näkymän parannusta ja korjailua (aika paljon opettelua).
+8.5|3|Desktop-näkymän parannusta. Listview lisäys, joka vaati usean toStringin muuton ArrayListin palauttavaksi metodiksi(+näiden testaus).
+9.5|2|Ohjelman viimeistely ja luokkien kaunistelu. Javadoc, checkstyle ja testikattavuus tarkistus. Itse ohjelma on nyt palautuskunnossa!
+9.5|1|Vaatimusmäärittelyn ja testausdokumentin rustaus kuntoon.
+9.5|2005-
 ----|--|----
-7.5|87| YHT TUNTIMÄÄRÄ
+7.5|94| YHT TUNTIMÄÄRÄ
 
 

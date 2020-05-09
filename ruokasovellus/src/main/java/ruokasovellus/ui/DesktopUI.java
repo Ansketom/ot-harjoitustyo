@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ruokasovellus.ui;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.*;
 import static javafx.scene.paint.Color.*;
-import javafx.scene.text.Text;
+
 
 import javafx.event.ActionEvent;
 import javafx.geometry.*;
@@ -70,9 +65,9 @@ public class DesktopUI extends Application {
         pageSwitcher.getChildren().addAll(first, second, third);
         pageSwitcher.setPadding(new Insets(5, 20, 20, 20));
         pageSwitcher.setSpacing(10);
-        first.setStyle("-fx-background-color: LIGHTSALMON;");
+        first.setStyle("-fx-background-color: LIGHTGRAY;");
         second.setStyle("-fx-background-color: LIGHTGRAY;");
-        third.setStyle("-fx-background-color: LIGHTGRAY;");
+        third.setStyle("-fx-background-color: LIGHTSALMON;");
         
         
         // Ruoka-ainesivu
@@ -80,7 +75,6 @@ public class DesktopUI extends Application {
         VBox incredientFields = new VBox();
         VBox incredientLabels = new VBox();
         HBox incredientManager = new HBox();
-        //Label incredientsList = new Label("");
         VBox incredientPage = new VBox();
         
         incredientButtons.setPadding(new Insets(5, 10, 5, 10));
@@ -93,7 +87,7 @@ public class DesktopUI extends Application {
         Button addIncr = new Button("Lisää");
         Button deleteIncr = new Button("Poista");
         Label incrTip = new Label("Syötä numeroarvot yhden \ndesimaalin kera! esim 13,3");
-        Button refreshIncredientsList = new Button("päivitä ruoka-aineluettelo");
+        Button refreshIncredientsList = new Button("Päivitä ruoka-aineluettelo");
         
         TextField incredientInput = new TextField();
         TextField kcalInput = new TextField();
@@ -109,6 +103,7 @@ public class DesktopUI extends Application {
         
         Label incredientsPageErrorMessage = new Label("");
         incredientsPageErrorMessage.setTextFill(RED);
+        incredientsPageErrorMessage.setPadding(new Insets(0, 0, 0, 10));
         ListView<String> dIncrList = new ListView<>(incrList);
         dIncrList.prefHeight(400);
         dIncrList.prefWidth(400);
@@ -161,7 +156,7 @@ public class DesktopUI extends Application {
             
 
             boolean iadd = dIncredients.addIncredient(incredName, ene, ch, prot, fat);
-            incredientsPageErrorMessage.setText("lisäys onnistui: " + iadd);
+            incredientsPageErrorMessage.setText("Lisäys onnistui: " + iadd);
             incrList.clear();
             incrList.addAll(dIncredients.listIncredientsArrayList());
             
@@ -257,7 +252,6 @@ public class DesktopUI extends Application {
                 mealPageErrorMessage.setText("");
                 try {
                     dPortions.deletePortionPart(mealNameInput.getText(), mealPartField.getText());
-                    mealList.setText(dIncredients.listIncredientsToString());
                 } catch (NumberFormatException n) {
                     mealPageErrorMessage.setText("Ruoka-aineen poisto ateriasta epäonnistui: tarkista kentät 'ruoka-annoksen nimi' ja 'ruoka-aine'!");
                     
@@ -291,26 +285,24 @@ public class DesktopUI extends Application {
         // Päiväkirjasivu
         VBox diaryButtons = new VBox();
         VBox diaryLabelsFields = new VBox();
-        //VBox diaryFields = new VBox();
         HBox waterManager = new HBox();
         HBox diaryDatabaseButtons = new HBox();
         HBox diaryManager = new HBox();
         
-        //diaryParts collects function controllers, errormessage-line and data view( to be added) on top of each other
         VBox diaryPage = new VBox();
         
         diaryButtons.setPadding(new Insets(5, 10, 5, 10));
         diaryButtons.setSpacing(2);
         diaryLabelsFields.setPadding(new Insets(5, 10, 5, 10));
         diaryLabelsFields.setAlignment(Pos.TOP_LEFT);
-        //diaryFields.setPadding(new Insets(5, 10, 5, 10));
         waterManager.setPadding(new Insets(5, 10, 5, 10));
         diaryDatabaseButtons.setPadding(new Insets(0, 0, 5, 10));
+        diaryDatabaseButtons.setSpacing(2);
         waterManager.setSpacing(2);
         
         Label portionLabel = new Label("Ruoka-annos:");
         Label dayLabel = new Label("Päivämäärä:");
-        //diaryLabelsFields.setSpacing(8);
+
         
         TextField diaryInput = new TextField();
         TextField dayInput = new TextField();
@@ -326,9 +318,9 @@ public class DesktopUI extends Application {
         Label waterUnit = new Label("desilitraa");
         TextField waterAmount = new TextField();
         
-        //Label portionsInData = new Label(dPortions.getPortionNames());
         
         Button showDiaryData = new Button("Update data");
+        Button zeroDiaryDay = new Button("Nollaa päivän ruoat (pvm, ateria)");
         
         ListView<String> diaryL = new ListView<>(diaryList);
         diaryList.clear();
@@ -340,7 +332,7 @@ public class DesktopUI extends Application {
         
         
         
-        Label diaryErrorMessage = new Label ("");
+        Label diaryErrorMessage = new Label("");
         diaryErrorMessage.setPadding(new Insets(0, 0, 5, 10));
         diaryErrorMessage.setTextFill(RED);
         
@@ -370,6 +362,15 @@ public class DesktopUI extends Application {
             diaryList.addAll(dDiary.getDiaryData());
             diaryErrorMessage.setText("");
         });
+        zeroDiaryDay.setOnAction((ActionEvent e)-> {
+            diaryErrorMessage.setText("Nollataksesi päivän ruoat, sijoita '0' ruoka-annoskenttään");
+            if (diaryInput.getText().equals("0")) {
+                diaryErrorMessage.setText("");
+                dDiary.updateDiary(dayInput.getText(), 0, 0, 0, 0);
+                diaryList.clear();
+                diaryList.addAll(dDiary.getDiaryData());
+            }
+        });
         getWaterAmount.setOnAction((ActionEvent e)-> {
             int waterA = diary.getWater(dayInput.getText());
             waterAmount.setText(String.valueOf(waterA));
@@ -377,7 +378,7 @@ public class DesktopUI extends Application {
         });
         exportWater.setOnAction((ActionEvent e)-> {
             String wAmount = waterAmount.getText().replaceAll("\\D+", "");
-            if (wAmount.equals("")){
+            if (wAmount.equals("")) {
                 diaryErrorMessage.setText("Ei lisättävää vesimäärää");
             } else {
                 int wAmo = Integer.valueOf(wAmount);
@@ -388,10 +389,9 @@ public class DesktopUI extends Application {
             }
         });
         
-        diaryLabelsFields.getChildren().addAll(portionLabel,diaryInput, dayLabel, dayInput);
-        //diaryFields.getChildren().addAll(diaryInput, dayInput);
+        diaryLabelsFields.getChildren().addAll(portionLabel, diaryInput, dayLabel, dayInput);
         diaryButtons.getChildren().addAll(getDate, formatMealList, sumAMeal, substractAMeal);
-        diaryDatabaseButtons.getChildren().addAll(showDiaryData);
+        diaryDatabaseButtons.getChildren().addAll(showDiaryData, zeroDiaryDay);
         waterManager.getChildren().addAll(getWaterAmount, waterAmount, waterUnit, exportWater);
         
         diaryManager.getChildren().addAll(diaryLabelsFields, diaryButtons, diaryM);
@@ -413,7 +413,6 @@ public class DesktopUI extends Application {
         });
         third.setOnAction((event)-> { 
             layout.setCenter(diaryPage);
-            //portionsInData.setText(dPortions.getPortionNames());
             dMealList.clear();
             dMealList.addAll(dPortions.getPortionNames());
             diaryList.clear();
@@ -423,7 +422,7 @@ public class DesktopUI extends Application {
             third.setStyle("-fx-background-color: LIGHTSALMON;");
         });
         
-        layout.setCenter(incredientPage);
+        layout.setCenter(diaryPage);
         
         Scene view = new Scene(layout);
         window.setTitle("Ruokaohjelma");
@@ -433,14 +432,7 @@ public class DesktopUI extends Application {
         window.show();
         
     }
-    private StackPane createLayout(String text) {
-        StackPane layout = new StackPane();
-        layout.setPrefSize(800, 1000);
-        layout.getChildren().add(new Label(text));
-        layout.setAlignment(Pos.CENTER);
-        
-        return layout;
-    }
+
     public static void main(String[] args) throws SQLException {
         System.out.println("Käynnistetään. 3..2..1..");
         

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ruokasovellus;
 
 import java.io.ByteArrayOutputStream;
@@ -11,14 +7,9 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Assert;
-
-
 
 /**
  *
@@ -42,14 +33,6 @@ public class DatabaseIncredientsTest {
 
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
         kanta.createTables();
@@ -60,28 +43,8 @@ public class DatabaseIncredientsTest {
         kanta.dropTables();
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
     @Test
-    public void addDeleteAndListIncredientsMethodsWork() throws SQLException {
-        
-        Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
-        Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
-        assertEquals("Ruoka-aineslista \n" +
-        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)\n" +
-        "kaurahiutale: 362.0(kcal), h:54.0, p:14.0, r:7.5\n" + 
-        "oliiviöljy: 900.0(kcal), h:0.0, p:0.0, r:100.0", Dincr.listIncredientsToString());
-        Dincr.deleteIncredient("kaurahiutale");
-        Dincr.deleteIncredient("oliiviöljy");
-        assertEquals("Ruoka-aineslista \n" +
-        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)", Dincr.listIncredientsToString());
-    
-    }
-    @Test
-    public void listIncredientsArrayListWorks() throws SQLException {
+    public void addDeleteAndListIncredientsArrayListWorks() throws SQLException {
         
         Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
         Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
@@ -99,22 +62,6 @@ public class DatabaseIncredientsTest {
     
     }
     
-    @Test
-    public void incredientNamesAreUniqueAndListIncredientsToStringWorks() throws SQLException {
-        
-        Dincr.addIncredient("kaurahiutale", 3620, 540, 140, 75);
-        Dincr.addIncredient("kaurahiutale", 1167, 200, 40, 23);
-        Dincr.addIncredient("kaurahiutale", 116, 20, 4, 2);
-        Dincr.addIncredient("oliiviöljy", 9000, 0, 0, 1000);
-        Dincr.addIncredient("oliiviöljy", 1117, 200, 4460, 423);
-        Dincr.addIncredient("oliiviöljy", 1167, 240, 440, 4553);
-        assertEquals("Ruoka-aineslista \n" +
-        "(Nimike: energiaa(kcal), hiilihydraattia, proteiinia, rasvaa (g/100g)\n" +
-        "kaurahiutale: 362.0(kcal), h:54.0, p:14.0, r:7.5\n" + 
-        "oliiviöljy: 900.0(kcal), h:0.0, p:0.0, r:100.0", Dincr.listIncredientsToString());
-        Dincr.deleteIncredient("kaurahiutale");
-        Dincr.deleteIncredient("oliiviöljy");
-    }
     @Test
     public void incredientNamesAreUniqueAndListIncredientsArrayListWorks() throws SQLException {
         
@@ -163,12 +110,6 @@ public class DatabaseIncredientsTest {
         assertFalse(Dincr.addIncredient("kaurahiutale", 220, 20, 20, 20));
         assertFalse(Dincr.deleteIncredient("kaurahiutale"));
         assertEquals(-1, Dincr.getIncredientId("kaurahiutale"));
-        kanta.createTables();
-    }
-    @Test
-    public void listIncredientsToStringCatchesError() throws SQLException {
-        kanta.dropTables();
-        assertEquals("VIRHE: Ruoka-aineiden listaaminen epäonnistui.", Dincr.listIncredientsToString());
         kanta.createTables();
     }
     @Test

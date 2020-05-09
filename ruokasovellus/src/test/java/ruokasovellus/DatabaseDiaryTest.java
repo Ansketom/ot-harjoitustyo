@@ -1,24 +1,14 @@
 package ruokasovellus;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Assert;
-
 
 /**
  *
@@ -43,15 +33,7 @@ public class DatabaseDiaryTest {
         date = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         System.setOut(new PrintStream(outContent));
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
         kanta.createTables();
@@ -62,12 +44,7 @@ public class DatabaseDiaryTest {
         kanta.dropTables();
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
-     @Test
+    @Test
     public void addingAndDeletingDateTODiaryWorks() throws SQLException {
         assertTrue(Ddiar.addDateToDiary("05.05.2020"));
         assertTrue(Ddiar.deleteDateFromDiary("05.05.2020"));
