@@ -9,7 +9,7 @@ Näillä luokilla on metodien oletuksenmukaisen toiminnan testaavat yksikkötest
  
 ### Testauskattavuus
  Käyttöliittymää (DesktopUI- ja Main-luokkaa) varten ei ole testejä. Muuten testauksella on 100% rivikattavuus ja 88% 
- <img src="https://github.com/ansketom/ot-harjoitustyo/tree/master/Dokumentointi/kuvat/ruokasovellus_testikattavuus.png" width="800">    
+ <img src="Dokumentointi/kuvat/ruokasovellus_testikattavuus.PNG" width="800">    
  
  Testikattavuus ei ole täysi, koska niiden koodaajalla loppui taidot kesken.
  
