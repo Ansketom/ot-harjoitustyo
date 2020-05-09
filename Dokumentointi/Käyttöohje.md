@@ -6,7 +6,7 @@ Ohjelman pitäisi toimia sellaisenaan, kun java 8 on asennettu tietokoneellesi.
 Ohjelma luo itse tarvitsemansa tietokantatiedoston "ruokasovellus.db", jos sitä ei käynnistyshetkellä .jar -tiedoston kanssa samassa kansiossa ole.
 
 ## Ohjelman käynnistys
-Ohjelman käynnistys tapahtuu komentoriviltä siitä kansioista, missä "ruokasovellus.jar" on, komennolla
+Ohjelman käynnistys tapahtuu komentoriviltä siitä kansioista, missä "ruokasovellus.jar" on, komennolla    
 ```    java -jar ruokasovellus.jar    ```    
 
 ## Ohjelman näkymät ja toiminnot
