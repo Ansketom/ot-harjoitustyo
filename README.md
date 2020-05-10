@@ -8,10 +8,10 @@ Tuhoton aikamäärä mikä tällä viikolla meni mm testien väsäämiseen ja ty
   
 ## Dokumentaatio
 
-[Käyttöohje](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Kayttoohje.md)
-[Vaatimusmäärittely](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/vaatimusmaarittely.md)  
-[Arkkitehtuurikuvaus](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Arkkitehtuurikuvaus.md)
-[Työaikakirjanpito](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/tyoaikakirjanpito.md)  
+[Käyttöohje](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Kayttoohje.md)    
+[Vaatimusmäärittely](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/vaatimusmaarittely.md)    
+[Arkkitehtuurikuvaus](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Arkkitehtuurikuvaus.md)    
+[Työaikakirjanpito](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/tyoaikakirjanpito.md)    
 
 ## Releaset
 [viikon 6 release](https://github.com/ansketom/ot-harjoitustyo/releases/tag/Viikko6)    
