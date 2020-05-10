@@ -1,11 +1,8 @@
 # Ruokasovellus
 Ruokasovellus on sovellus, jonka avulla käyttäjä voi laskea, että kuinka paljon hän sai päivän
- aikana energiaa ja eri makroravinteita. Laskenta tapahtuu sovellukseen 
+ aikana energiaa ja eri makroravinteita sekä vettä. Laskenta tapahtuu sovellukseen 
 aiemmin tallennetuista ruoka-aineista koostettuja aterioita yhteen laskemalla.  
-  
-Ohjelman testauksen kanssa on ollut suuria vaikeuksia, enkä tajua miten se kuuluisi fiksusti hoitaa - varmaan olemalla tekemättä tällaista ohjelmaa..  
-Tuhoton aikamäärä mikä tällä viikolla meni mm testien väsäämiseen ja tyhmien toiminnallisuuden luomisen ongelmien (en meinannut saada mitään toimimaan) korjaamiseen teki tilanteen jälleen sellaiseksi että en enää kerinnyt tehdä dokumentointia kun riskinä oli joka tapauksessa vajaa ohjelma joka kaiken lisäksi ei edes aukea missään tai mitenkään.     
-  
+    
 ## Dokumentaatio
 
 [Käyttöohje](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Kayttoohje.md)    
