@@ -6,35 +6,37 @@ aiemmin tallennetuista ruoka-aineista koostettuja aterioita yhteen laskemalla.
 Ohjelman testauksen kanssa on ollut suuria vaikeuksia, enkä tajua miten se kuuluisi fiksusti hoitaa - varmaan olemalla tekemättä tällaista ohjelmaa..  
 Tuhoton aikamäärä mikä tällä viikolla meni mm testien väsäämiseen ja tyhmien toiminnallisuuden luomisen ongelmien (en meinannut saada mitään toimimaan) korjaamiseen teki tilanteen jälleen sellaiseksi että en enää kerinnyt tehdä dokumentointia kun riskinä oli joka tapauksessa vajaa ohjelma joka kaiken lisäksi ei edes aukea missään tai mitenkään.     
   
-### Dokumentaatio
+## Dokumentaatio
 
+[Käyttöohje](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Kayttoohje.md)
 [Vaatimusmäärittely](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/vaatimusmaarittely.md)  
+[Arkkitehtuurikuvaus](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/Arkkitehtuurikuvaus.md)
 [Työaikakirjanpito](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/tyoaikakirjanpito.md)  
-[viikon 6 release](https://github.com/ansketom/ot-harjoitustyo/releases/tag/Viikko6)  
-[SQL-skeema](https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/SQL-skeema.txt)    
-muita arkkitehtuuridokumentteja ei vielä ole.  
 
+## Releaset
+[viikon 6 release](https://github.com/ansketom/ot-harjoitustyo/releases/tag/Viikko6)    
+[viikon 7 release](https://github.com/ansketom/ot-harjoitustyo/releases/tag/Viikko7) 
+ 
 
+## Komentorivikomennot
 
-
-
-
-### Komentorivikomennot
-
-#### Ohjelman käyttö
+### Ohjelman käyttö
 Komentoriviltä [juurikansiosta](https://github.com/ansketom/ot-harjoitustyo/tree/master/ruokasovellus)
 (..ot-harjoitustyo\ruokasovellus) komennolla  
 ```    mvn compile exec:java -Dexec.mainClass=ruokasovellus.Main    ```  
 
-#### Testaus
-Testit saa suoritettua komennolla  
+### Testaus
+#### Testit saa suoritettua komennolla  
 ```    mvn test    ```  
-Testikattavuusraportin saa luotua komennolla  
+#### Testikattavuusraportin saa luotua komennolla  
 ```    mvn test jacoco:report    ```  
-Selaimella avattava kattavuusraportti: \target\site\jacoco\index.html  
   
-Checkstyleraportin tekeminen 
-```    mvn jxr:jxr checkstyle:checkstyle    ```
+#### Checkstyleraportin tekeminen 
+```    mvn jxr:jxr checkstyle:checkstyle    ```    
+#### JavaDoc
+```    mvn javadoc:javadoc    ```    
+####Suoritettavan jar:n generointi
+```    mvn package    ```
 
 
 
