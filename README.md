@@ -35,7 +35,7 @@ Komentoriviltä [juurikansiosta](https://github.com/ansketom/ot-harjoitustyo/tre
 ```    mvn jxr:jxr checkstyle:checkstyle    ```    
 #### JavaDoc
 ```    mvn javadoc:javadoc    ```    
-####Suoritettavan jar:n generointi
+#### Suoritettavan jar:n generointi    
 ```    mvn package    ```
 
 
