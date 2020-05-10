@@ -3,7 +3,7 @@
 ## Rakenne  
 Ohjelman rakenne noudattaa kerrosarkkitehtuuria, jossa on kolme kerrosta.
 Suuri osa ohjelmaa käyttää käyttöliittymästä suoraan tietokantaa.    
-<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentaatio/kuvat/rakenne.PNG?raw=true" width="193">    
+<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/rakenne.PNG?raw=true" width="193">    
 
 Ruokasovelluksella on JavaFX:llä toteutettu graafinen käyttöliittymä, joka on ruokasovellus.ui -kansiossa.
 ruokasovellus.dao -kansiossa on ohjelman tietokantaa käyttävät luokat. 
@@ -30,6 +30,6 @@ Nämä luokat suorittavat nimensä viittaamia toimintoja tietokantaan. Ruoka-ann
 Päiväkirjan toiminnot ovat erilliset ruoka-aineisiin ja -annoksiin liittyvistä toiminnoista. Päiväkirjaa täyttävä domain-luokka [DiaryFunctions](https://github.com/ansketom/ot-harjoitustyo/blob/master/ruokasovellus/src/main/java/ruokasovellus/domain/DiaryFunctions.java)
 tosin käyttää tietoja sekä DatabaseIncredients- että DatabasePortions-tauluista.  
 
-<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentaatio/kuvat/datamalli.PNG?raw=true" width="461">  
-<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentaatio/kuvat/tietokantakaavio.PNG?raw=true" width="577">  
+<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/datamalli.PNG?raw=true" width="461">  
+<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/tietokantakaavio.PNG?raw=true" width="577">  
 
