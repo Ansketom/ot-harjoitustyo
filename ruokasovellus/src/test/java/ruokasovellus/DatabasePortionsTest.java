@@ -33,7 +33,7 @@ public class DatabasePortionsTest {
         kanta = new Database();
         Dincr = new DatabaseIncredients(kanta);
         Dport = new DatabasePortions(kanta, Dincr);
-        Ddiar = new DatabaseDiary(kanta, Dport);
+        Ddiar = new DatabaseDiary(kanta);
         System.setOut(new PrintStream(outContent));
 
     }
@@ -217,5 +217,12 @@ public class DatabasePortionsTest {
         assertEquals("VIRHE: ei onnistuttu hakemaan annostensisältödataa.", outContent.toString());
         kanta.createTables();
     }
-    
+    @Test
+    public void databaseCatchesErrorInCaseOneAppears() throws SQLException {
+        kanta.dropTables();
+        assertFalse(Dport.addPortion("aamupuuro"));
+        assertFalse(Dport.deletePortion("aamupuuro"));
+        assertFalse(Dport.addDishContents(1, 1, 100));
+        assertFalse(Dport.deletePortionPart("aamupuuro", "kaurahiutale"));
+    }
 }

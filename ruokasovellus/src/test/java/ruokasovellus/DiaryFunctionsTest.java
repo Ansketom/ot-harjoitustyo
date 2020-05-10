@@ -32,7 +32,7 @@ public class DiaryFunctionsTest {
         kanta= new Database();
         Dincr = new DatabaseIncredients(kanta);
         Dport = new DatabasePortions(kanta, Dincr);
-        Ddiar = new DatabaseDiary(kanta, Dport);
+        Ddiar = new DatabaseDiary(kanta);
         diary = new DiaryFunctions(kanta, Dincr, Dport, Ddiar);
         
         date = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -103,15 +103,9 @@ public class DiaryFunctionsTest {
         assertEquals(0, diary.getWater("04.05.2020"));
     }
     @Test
-    public void addWaterAddsTheAmountOfWater() {
+    public void UpdateWaterWorks() {
         Ddiar.addDateToDiary("04.05.2020");
-        assertEquals(0, diary.getWater("04.05.2020"));
-        assertTrue(diary.addWater("04.05.2020", 25));
-        assertEquals(25, diary.getWater("04.05.2020"));
-        assertTrue(diary.addWater("04.05.2020", -5));
-        assertTrue(diary.addWater("04.05.2020", -25));
-        assertEquals(20, diary.getWater("04.05.2020"));
-        Ddiar.deleteDateFromDiary("04.05.2020");
-        }
-   
+        assertTrue(diary.updateWater("04.05.2020", 30));
+    }
+
 }

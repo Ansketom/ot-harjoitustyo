@@ -31,7 +31,7 @@ public class DatabaseTest {
         kanta = new Database();
         Dincr = new DatabaseIncredients(kanta);
         Dport = new DatabasePortions(kanta, Dincr);
-        Ddiar = new DatabaseDiary(kanta, Dport);
+        Ddiar = new DatabaseDiary(kanta);
         diary = new DiaryFunctions(kanta, Dincr, Dport, Ddiar);
         date = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         System.setOut(new PrintStream(outContent));

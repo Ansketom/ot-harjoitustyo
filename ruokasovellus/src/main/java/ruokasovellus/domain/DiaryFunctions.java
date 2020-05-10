@@ -109,23 +109,7 @@ public class DiaryFunctions {
         }
         return dDiary.updateDiary(dayValue, kcal, ch, prot, fat);
     }
-    /**
-    * Metodi käyttää tietokantaa käyttävän luokan metodeita hakeakseen päivämäärän
-    * kohdalle merkityn vesimäärän, summaa siihen halutun vesimäärän, ja jos tulos
-    * on positiivinen niin päivittää sen tietokannan päiväkirjatauluun.
-    * 
-    * @param dayValue päivämäärä dd.MM.yyyy
-    * @param desiliters summattava vesimäärä desilitroina
-    * 
-    * @return totuusarvo siitä saiko metodi lopuksi päivitettyä uuden arvon tietokantaan
-    */
-    public boolean addWater(String dayValue, int desiliters) {
-        int waterAmount = this.getWater(dayValue);
-        if ((desiliters + waterAmount) > 0) {
-            waterAmount += desiliters;
-        }
-        return this.updateWater(dayValue, waterAmount);
-    }
+    
     /**
     * Metodi hakee päivämäärän kohdalle merkityn vesimäärän 
     * tietokannan päiväkirjataulusta tietokantaa käyttävän luokan metodin avulla.
