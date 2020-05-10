@@ -17,10 +17,10 @@ Sovellus aukeaa ensimmäisenä näkymään, jossa käyttäjä voi laskea päivä
 -Käyttäjä voi muodostaa ruoka-aineista ja niiden eri määristä aterian.(Näkymä2)  
 -Käyttäjä voi muokata lisäämänsä aterian sisältöä myös poistamalla sen osia. (Näkymä2)  
 -Käyttäjä voi laskea aterioita yhteen päiväkirjaan, ja saada siten selville päivän ruokien energiamäärän (kcal) ja makroravinnemäärät
- (gramoina: hiilihydraattia, proteiinia, rasvaa)(Näkymä3).  
--Käyttäjä voi tallettaa päiväkirjaan myös päivän aikana juomansa veden määrän.
--Päiväkirjasta voi myös poistaa aterioita, ja sinne tehdyt laskelmat voi myös nollata.
--Käyttäjä voi vaihtaa näkymää välilehtien selaamisen tapaan ohjelmassa olevien kolmen(3) näkymän välillä.  
+ (gramoina: hiilihydraattia, proteiinia, rasvaa)(Näkymä3).    
+-Käyttäjä voi tallettaa päiväkirjaan myös päivän aikana juomansa veden määrän.    
+-Päiväkirjasta voi myös poistaa aterioita, ja sinne tehdyt laskelmat voi myös nollata.    
+-Käyttäjä voi vaihtaa näkymää välilehtien selaamisen tapaan ohjelmassa olevien kolmen(3) näkymän välillä.   
 
 
 ### Jatkokehitysideoita
