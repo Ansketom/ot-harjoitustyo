@@ -41,8 +41,8 @@ Päivä | aika(h) | Mitä tein
 9.5|2|Ohjelman viimeistely ja luokkien kaunistelu. Javadoc, checkstyle ja testikattavuus tarkistus. Itse ohjelma on nyt palautuskunnossa!
 9.5|1|Vaatimusmäärittelyn ja testausdokumentin rustaus kuntoon.
 9.5|3|Ohjelman käynnistely ja käyttö toisella tietokoneella. Käyttöohjeen teko.
-
+10.5|6| Arkkitehtuurikuvaus
 ----|--|----
-7.5|94| YHT TUNTIMÄÄRÄ
+10.5|106| YHT TUNTIMÄÄRÄ
 
 

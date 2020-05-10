@@ -52,7 +52,8 @@ Ruokasovellus luo itselleen SQLite tietokantatiedoston (ruokasovellus.db) ohjelm
 #### Ruoka-aineen lisäys ja poisto
 Ruoka-aineen lisääminen tapahtuu täyttämällä käyttöliittymän kenttiin ruoka-aineen nimi, energiamäärä sekä makroravinteet pyydetyssä muodossa, ja painamalla painiketta "Lisää".  
 Ruoka-aineen poistaminen tapahtuu täyttämällä käyttöliittymän kenttään ruoka-aineen nimi ja Kcal -kenttään "-1", ja painamalla sitten painiketta "Poista".
-Näiden toimintojen tapauksessa etenee ohjelma seuraavasti:  (lisäys, yritys lisätä samanniminen uudestaan, poistaminen, lisäys)    
+Näiden toimintojen tapauksessa etenee ohjelma seuraavasti:    
+(lisäys, yritys lisätä samanniminen uudestaan, poistaminen, lisäys)    
 <img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/ruokaaineenlisays.png?raw=true" width="746">    
 Ruokasovellus päivittää näkyvän Ruoka-aineslistan automaattisesti lisäyksiä ja poistoja tehdessä.
     
