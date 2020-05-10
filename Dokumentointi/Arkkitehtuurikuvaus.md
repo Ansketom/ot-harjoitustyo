@@ -53,7 +53,7 @@ Ruokasovellus luo itselleen SQLite tietokantatiedoston (ruokasovellus.db) ohjelm
 Ruoka-aineen lisääminen tapahtuu täyttämällä käyttöliittymän kenttiin ruoka-aineen nimi, energiamäärä sekä makroravinteet pyydetyssä muodossa, ja painamalla painiketta "Lisää".  
 Ruoka-aineen poistaminen tapahtuu täyttämällä käyttöliittymän kenttään ruoka-aineen nimi ja Kcal -kenttään "-1", ja painamalla sitten painiketta "Poista".
 Näiden toimintojen tapauksessa etenee ohjelma seuraavasti:  (lisäys, yritys lisätä samanniminen uudestaan, poistaminen, lisäys)    
-<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/ruokaaineenlisays.PNG?raw=true" width="746">    
+<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/ruokaaineenlisays.png?raw=true" width="746">    
 Ruokasovellus päivittää näkyvän Ruoka-aineslistan automaattisesti lisäyksiä ja poistoja tehdessä.
     
 #### Ruoka-annoksen lisäys
@@ -61,7 +61,7 @@ Ruoka-annoksen lisääminen tapahtuu lisäämällä ensin tietokantaan uusi ruok
 Kun ruoka-annos on lisätty, voidaan siihen alkaa liittää aterian osiksi ruoka-aineita. Tämä tapahtuu halutun annoksen ollessa kirjoitettuna ruoka-ainnoksen nimi-kenttään kirjoittamalla Ruoka-aine -kenttään
  jo aiemmin lisätyn ruoka-aineen nimi, kirjoittamalla ruoka-aineen määrä -kenttään annoksessa oleva määrä ruoka-ainetta grammoissa, ja sitten painamalla painiketta "Lisää ruoka-aine annokseen".
  Ohjelman toiminta näiden toimintojen tekemiseksi on kuvattu alla:    
-<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/annoksenlisays.PNG?raw=true" width="754">    
+<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/annoksenlisays.png?raw=true" width="754">    
 
 #### Päiväkirjan pito - ruoka-annoksen ja vesimäärän lisäys päiväkirjaan
 Päiväkirjan näyttää toimivan samantyylisesti kuin yllä kuvatut toiminnot, mutta se suoran tietokannan käytön sijaan se käyttää toimiakseen apuluokkaa DiaryFunctions.
@@ -73,7 +73,7 @@ Tämän jälkeen voi tälle päivämäärälle (päivämääräkenttä) ruveta l
 Veden lisäys päivämäärälle menee päivän alustamisen jälkeen siten, että kun päivämääräkentässä on haluttu päivämäärä jolle vesimäärä lisätään, voidaan koko päivän aikana juotu vesimäärä kirjata 
 desilitroina päivämääräsivun keskellä olevaan kenttään, ja sitten painaa painiketta "Tallenna vesimäärä".
 
-<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/paivakirjanpito.PNG?raw=true" width="1130">    
+<img src = "https://github.com/ansketom/ot-harjoitustyo/blob/master/Dokumentointi/kuvat/paivakirjanpito.png?raw=true" width="1130">    
 Int[] data -listat, joita DiaryFunctions käsittelee, koostuvat päivän tai ruoka-aineen kcal-määristä ja makroravinteista (int[]data = {kcal, ch, prot, fat}).
 DatabasePortions-luokasta haettu ArrayList sisältää päivämäärälle lisättävän annoksen ruoka-aineet, ja niiden määrät.
 getIncredientDataInInt-metodia kutsutaan niin monta kertaa, kuin lisättävässä annoksessa on annoksenosia.
