@@ -1,5 +1,10 @@
 package ruokasovellus;
 
+import ruokasovellus.domain.DiaryFunctions;
+import ruokasovellus.dao.Database;
+import ruokasovellus.dao.DatabasePortions;
+import ruokasovellus.dao.DatabaseDiary;
+import ruokasovellus.dao.DatabaseIncredients;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,5 +1,5 @@
 
-package ruokasovellus;
+package ruokasovellus.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,12 +16,11 @@ public class DatabaseDiary {
 
     public Database kanta;
     public Connection db;
-    public DatabasePortions dPortions;
+
     
-    public DatabaseDiary(Database kanta, DatabasePortions dport) throws SQLException {
+    public DatabaseDiary(Database kanta) throws SQLException {
         this.kanta = kanta;
         this.db = kanta.db;
-        this.dPortions = dport;
     }
     
     /**

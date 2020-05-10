@@ -1,5 +1,5 @@
 
-package ruokasovellus;
+package ruokasovellus.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

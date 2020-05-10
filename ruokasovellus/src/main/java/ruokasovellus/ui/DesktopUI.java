@@ -15,11 +15,11 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import ruokasovellus.Database;
-import ruokasovellus.DatabaseIncredients;
-import ruokasovellus.DatabasePortions;
-import ruokasovellus.DatabaseDiary;
-import ruokasovellus.DiaryFunctions;
+import ruokasovellus.dao.Database;
+import ruokasovellus.dao.DatabaseIncredients;
+import ruokasovellus.dao.DatabasePortions;
+import ruokasovellus.dao.DatabaseDiary;
+import ruokasovellus.domain.DiaryFunctions;
 
 
 
@@ -52,7 +52,7 @@ public class DesktopUI extends Application {
         kanta.createTables();
         DatabaseIncredients dIncredients = new DatabaseIncredients(kanta);
         DatabasePortions dPortions = new DatabasePortions(kanta, dIncredients);
-        DatabaseDiary dDiary = new DatabaseDiary(kanta, dPortions);
+        DatabaseDiary dDiary = new DatabaseDiary(kanta);
         DiaryFunctions diary = new DiaryFunctions(kanta, dIncredients, dPortions, dDiary);
         
         BorderPane layout = new BorderPane();
@@ -244,6 +244,8 @@ public class DesktopUI extends Application {
                 } catch (NumberFormatException n) {
                     mealPageErrorMessage.setText("Ruoan lisäys ateriaan epäonnistui: tarkista kaikki kentät!");
                 }
+                pMealList.clear();
+                pMealList.addAll(dPortions.getPortionContentsWithName(mealNameInput.getText()));
             }
         });
         deleteFromMeal.setOnAction(new EventHandler<ActionEvent>() {
@@ -256,6 +258,8 @@ public class DesktopUI extends Application {
                     mealPageErrorMessage.setText("Ruoka-aineen poisto ateriasta epäonnistui: tarkista kentät 'ruoka-annoksen nimi' ja 'ruoka-aine'!");
                     
                 }
+                pMealList.clear();
+                pMealList.addAll(dPortions.getPortionContentsWithName(mealNameInput.getText()));
             }
         });
         listAllMeals.setOnAction((ActionEvent e) -> {

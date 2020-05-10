@@ -1,6 +1,10 @@
 
-package ruokasovellus;
+package ruokasovellus.domain;
 
+import ruokasovellus.dao.DatabaseIncredients;
+import ruokasovellus.dao.DatabaseDiary;
+import ruokasovellus.dao.DatabasePortions;
+import ruokasovellus.dao.Database;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

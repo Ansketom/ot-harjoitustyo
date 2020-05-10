@@ -1,6 +1,10 @@
 
 package ruokasovellus;
 
+import ruokasovellus.dao.Database;
+import ruokasovellus.dao.DatabasePortions;
+import ruokasovellus.dao.DatabaseDiary;
+import ruokasovellus.dao.DatabaseIncredients;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.sql.SQLException;
